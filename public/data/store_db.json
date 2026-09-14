@@ -1,0 +1,417 @@
+{
+  "storeSettings": {
+    "store_name": "متجري",
+    "store_description": "وجهتك الأولى للتسوق الإلكتروني الشامل — إلكترونيات، أجهزة منزلية ومطبخ، أزياء، مستلزمات والمزيد بأفضل الأسعار وأسرع توصيل",
+    "store_phone": "+201012345678",
+    "store_whatsApp_number": "+201012345678",
+    "store_GPS": "https://maps.google.com",
+    "store_design": {
+      "primary_color": "#131921",
+      "secondary_color": "#FF9900",
+      "background_color": "#FFFFFF",
+      "text_color": "#111111",
+      "font_family": "Inter, Arial, Helvetica, sans-serif",
+      "banner_text": "تخفيضات كبرى وعروض حصرية على مختلف الأقسام مع شحن مجاني وسريع لكافة المحافظات"
+    }
+  },
+  "sections": [
+    {
+      "_id": "sec_1",
+      "name": "أجهزة منزلية ومطبخ"
+    },
+    {
+      "_id": "sec_2",
+      "name": "إلكترونيات وأجهزة ذكية"
+    },
+    {
+      "_id": "sec_3",
+      "name": "هواتف وإكسسوارات"
+    },
+    {
+      "_id": "sec_4",
+      "name": "أزياء وملابس وأحذية"
+    },
+    {
+      "_id": "sec_5",
+      "name": "عطور وعناية شخصية"
+    },
+    {
+      "_id": "sec_6",
+      "name": "مستلزمات وديكور المنزل"
+    }
+  ],
+  "products": [
+    {
+      "_id": "prod_1",
+      "name": "ثلاجة ذكية نوفروست 4 أبواب سعة 480 لتر مع شاشة لمس",
+      "description": "ثلاجة متطورة بنظام تبريد ثنائي وتوفير فائق للطاقة Inverter، شاشة رقمية للتحكم بالحرارة، أرفف زجاجية مقواة وضمان 10 سنوات على الموتور.",
+      "price": 42000,
+      "discount": 15,
+      "final_price": 35700,
+      "image": "https://images.unsplash.com/photo-1584568694244-14fbdf83bd30?w=600&auto=format&fit=crop&q=80",
+      "quantity": 8,
+      "section": {
+        "_id": "sec_1",
+        "name": "أجهزة منزلية ومطبخ"
+      }
+    },
+    {
+      "_id": "prod_2",
+      "name": "شاشة تلفزيون ذكية 65 بوصة 4K Ultra HD OLED بنظام Android",
+      "description": "شاشة سينمائية مذهلة تدعم تقنية Dolby Vision وDolby Atmos ومعدل تحديث 120Hz، صوت محيطي ونظام ذكي يدعم كافة تطبيقات البث مع ريموت صوتي.",
+      "price": 34500,
+      "discount": 10,
+      "final_price": 31050,
+      "image": "https://images.unsplash.com/photo-1593359677879-a4bb92f829d1?w=600&auto=format&fit=crop&q=80",
+      "quantity": 6,
+      "section": {
+        "_id": "sec_2",
+        "name": "إلكترونيات وأجهزة ذكية"
+      }
+    },
+    {
+      "_id": "prod_3",
+      "name": "قلاية هوائية رقمية سعة 7 لتر بدون زيت مع 10 برامج ذكية",
+      "description": "طهي صحي بدهون أقل بنسبة 85%، شاشة لمس ملونة مع برامج مسبقة للقلي والشواء والتحميص، وعاء غير لاصق سهل التنظيف في غسالة الأطباق.",
+      "price": 5800,
+      "discount": 20,
+      "final_price": 4640,
+      "image": "https://images.unsplash.com/photo-1585659722983-3a675dabf23d?w=600&auto=format&fit=crop&q=80",
+      "quantity": 15,
+      "section": {
+        "_id": "sec_1",
+        "name": "أجهزة منزلية ومطبخ"
+      }
+    },
+    {
+      "_id": "prod_4",
+      "name": "ماكينة تحضير قهوة إسبريسو وكابتشينو أوتوماتيكية 15 بار",
+      "description": "مضخة إيطالية بقوة 15 بار، ذراع تبخير حليب احترافي لصنع فوم الكابتشينو واللاتيه، خزان ماء 1.5 لتر قابل للإزالة وتصميم ستانلس ستيل أنيق.",
+      "price": 18900,
+      "discount": 0,
+      "final_price": 18900,
+      "image": "https://images.unsplash.com/photo-1517668808822-9ebb02f2a0e6?w=600&auto=format&fit=crop&q=80",
+      "quantity": 10,
+      "section": {
+        "_id": "sec_1",
+        "name": "أجهزة منزلية ومطبخ"
+      }
+    },
+    {
+      "_id": "prod_5",
+      "name": "مكنسة روبوت ذكية مع مسح تلقائي ورسم خرائط ليزر LiDAR",
+      "description": "قوة شفط جبارة 4000 باسكال، خزان ماء إلكتروني للمسح الرطب، نظام ملاحة دقيق يتجنب العوائق والسلالم مع تحكم كامل عبر تطبيق الهاتف الذكي.",
+      "price": 14500,
+      "discount": 12,
+      "final_price": 12760,
+      "image": "https://images.unsplash.com/photo-1610492461128-4bc2794c4897?w=600&auto=format&fit=crop&q=80",
+      "quantity": 7,
+      "section": {
+        "_id": "sec_1",
+        "name": "أجهزة منزلية ومطبخ"
+      }
+    },
+    {
+      "_id": "prod_6",
+      "name": "لابتوب ألترا بوك نحيف فائق الأداء Core i7 رام 16GB سعة 512GB SSD",
+      "description": "هيكل معدني خفيف الوزن 1.2 كجم، معالج فائق السرعة للأعمال والتصميم، بطارية تدوم حتى 14 ساعة وشاشة IPS بدقة عالية وحواف نحيفة جداً.",
+      "price": 38000,
+      "discount": 8,
+      "final_price": 34960,
+      "image": "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=600&auto=format&fit=crop&q=80",
+      "quantity": 5,
+      "section": {
+        "_id": "sec_2",
+        "name": "إلكترونيات وأجهزة ذكية"
+      }
+    },
+    {
+      "_id": "prod_7",
+      "name": "سماعات رأس لاسلكية احترافية مع إلغاء الضوضاء الفائق ANC",
+      "description": "صوت عالي الدقة Hi-Res مع خاصية إلغاء الضوضاء المحيطة، وسائد أذن ميموري فوم مريحة للاستخدام الطويل، وميكروفونات متعددة لمكالمات نقية.",
+      "price": 8500,
+      "discount": 15,
+      "final_price": 7225,
+      "image": "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600&auto=format&fit=crop&q=80",
+      "quantity": 12,
+      "section": {
+        "_id": "sec_2",
+        "name": "إلكترونيات وأجهزة ذكية"
+      }
+    },
+    {
+      "_id": "prod_8",
+      "name": "هاتف ذكي رائد 256 جيجابايت كاميرا 200 ميجابكسل شاشة AMOLED 120Hz",
+      "description": "معالج رائد للألعاب، شاشة خرافية بسطوع خارق تحت أشعة الشمس، شحن فائق السرعة 100 واط، ومقاومة كاملة للماء والغبار بمعيار IP68.",
+      "price": 32000,
+      "discount": 10,
+      "final_price": 28800,
+      "image": "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=600&auto=format&fit=crop&q=80",
+      "quantity": 9,
+      "section": {
+        "_id": "sec_3",
+        "name": "هواتف وإكسسوارات"
+      }
+    },
+    {
+      "_id": "prod_9",
+      "name": "ساعة يد ذكية لمتابعة اللياقة والصحة مقاومة للماء مع شاشة AMOLED",
+      "description": "مستشعرات دقيقة لنبض القلب والأكسجين ومراقبة النوم والتمارين الرياضية، بطارية تدوم 10 أيام مع سوار سيليكون مريح قابل للتغيير.",
+      "price": 7200,
+      "discount": 0,
+      "final_price": 7200,
+      "image": "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&auto=format&fit=crop&q=80",
+      "quantity": 14,
+      "section": {
+        "_id": "sec_3",
+        "name": "هواتف وإكسسوارات"
+      }
+    },
+    {
+      "_id": "prod_10",
+      "name": "حذاء رياضي أصلي خفيف الوزن ومقاوم للصدمات للجري والمشي",
+      "description": "نعل مطاطي مبطن بنظام امتصاص الصدمات، قماش شبكي مسامي للتهوية، تصميم عصري مريح للارتداء اليومي والتمارين الشاقة.",
+      "price": 3400,
+      "discount": 25,
+      "final_price": 2550,
+      "image": "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&auto=format&fit=crop&q=80",
+      "quantity": 20,
+      "section": {
+        "_id": "sec_4",
+        "name": "أزياء وملابس وأحذية"
+      }
+    },
+    {
+      "_id": "prod_11",
+      "name": "حقيبة ظهر عصرية مضادة للماء مع منفذ شحن USB وقفل رقمي",
+      "description": "جيوب منظمة متعددة تتسع للابتوب حتى 15.6 بوصة والملفات، أقمشة متينة مقاومة للخدوش والأمطار، تصميم أنيق مناسب للسفر والعمل والجامعة.",
+      "price": 1850,
+      "discount": 0,
+      "final_price": 1850,
+      "image": "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=600&auto=format&fit=crop&q=80",
+      "quantity": 18,
+      "section": {
+        "_id": "sec_4",
+        "name": "أزياء وملابس وأحذية"
+      }
+    },
+    {
+      "_id": "prod_12",
+      "name": "عطر فرنسي فاخر للجنسين 100 مل ذو فوحان وثبات عالي",
+      "description": "توليفة ساحرة من نوتات العود والعنبر والبرغموت المنعش مع لمسات الفانيليا الدافئة، عبوة زجاجية راقية مثالية للإهداء والاستخدام الفاخر.",
+      "price": 2900,
+      "discount": 18,
+      "final_price": 2378,
+      "image": "https://images.unsplash.com/photo-1523293182086-7651a899d37f?w=600&auto=format&fit=crop&q=80",
+      "quantity": 11,
+      "section": {
+        "_id": "sec_5",
+        "name": "عطور وعناية شخصية"
+      }
+    },
+    {
+      "_id": "prod_13",
+      "name": "خلاط كهربائي احترافي 1200 واط مع وعاء زجاجي ومطحنة توابل",
+      "description": "شفرات فولاذية مقاومة للصدأ بست شفرات لسحق الثلج وتحضير العصائر والشوربات في ثوانٍ، 5 سرعات مع خاصية النبضات وقاعدة مانعة للانزلاق.",
+      "price": 3600,
+      "discount": 10,
+      "final_price": 3240,
+      "image": "https://images.unsplash.com/photo-1570222094114-d054a817e56b?w=600&auto=format&fit=crop&q=80",
+      "quantity": 13,
+      "section": {
+        "_id": "sec_1",
+        "name": "أجهزة منزلية ومطبخ"
+      }
+    },
+    {
+      "_id": "prod_14",
+      "name": "ميكروويف وشواية رقمية سعة 32 لتر مع برامج تسخين سريع",
+      "description": "طهي وشواء سريع بقدرة 1000 واط، طلاء داخلي سيراميك مضاد للبكتيريا وسهل المسح، إذابة سريعة للثلج بحسب الوزن وقفل حماية للأطفال.",
+      "price": 6900,
+      "discount": 0,
+      "final_price": 6900,
+      "image": "https://images.unsplash.com/photo-1574269909862-7e1d70bb8078?w=600&auto=format&fit=crop&q=80",
+      "quantity": 8,
+      "section": {
+        "_id": "sec_1",
+        "name": "أجهزة منزلية ومطبخ"
+      }
+    }
+  ],
+  "reviews": [
+    {
+      "_id": "rev_1789142751325",
+      "product_id": "prod_1",
+      "user_name": "علي محمود",
+      "rating": 5,
+      "content": "منتج ممتاز جدا وخامة رائعة وتوصيل سريع",
+      "created_at": "2026-09-11T16:05:51.325Z"
+    },
+    {
+      "_id": "rev_1",
+      "product_id": "prod_1",
+      "user_name": "طارق عبد الله",
+      "rating": 5,
+      "content": "الثلاجة ممتازة جداً وتبريدها هادئ وقوي، والشاشة الذكية عملية للغاية، والتوصيل وصل في الموعد المحدد.",
+      "created_at": "2026-09-06T15:58:58.207Z"
+    },
+    {
+      "_id": "rev_2",
+      "product_id": "prod_2",
+      "user_name": "سارة إبراهيم",
+      "rating": 5,
+      "content": "ألوان شاشة OLED خرافية وجودة الصوت مذهلة، تجربة مشاهدة سينمائية حقيقية بالمنزل وأنصح بها بشدة.",
+      "created_at": "2026-09-07T15:58:58.207Z"
+    },
+    {
+      "_id": "rev_3",
+      "product_id": "prod_3",
+      "user_name": "محمود فهمي",
+      "rating": 5,
+      "content": "القلاية سهلت علينا إعداد الأكل الصحي بدون زيت وسريعة جداً في التحمير وسعتها 7 لتر كافية للعائلة.",
+      "created_at": "2026-09-08T15:58:58.207Z"
+    },
+    {
+      "_id": "rev_4",
+      "product_id": "prod_4",
+      "user_name": "ياسين النجار",
+      "rating": 4,
+      "content": "ماكينة قهوة رائعة، استخلاص الإسبريسو غني بالكريمة والتبخير ممتاز لصنع فوم الحليب.",
+      "created_at": "2026-09-09T15:58:58.207Z"
+    },
+    {
+      "_id": "rev_5",
+      "product_id": "prod_5",
+      "user_name": "منى الشريف",
+      "rating": 5,
+      "content": "المكنسة الروبوت ذكية جداً في رسم خريطة الشقة والمسح المائي نظيف وسرعة التوصيل ممتازة.",
+      "created_at": "2026-09-08T15:58:58.207Z"
+    },
+    {
+      "_id": "rev_6",
+      "product_id": "prod_6",
+      "user_name": "عمر خالد",
+      "rating": 5,
+      "content": "لابتوب فائق النحافة والأداء قوي جداً مع بطارية تدوم طوال اليوم وشاشة مريحة للعين.",
+      "created_at": "2026-09-09T15:58:58.207Z"
+    },
+    {
+      "_id": "rev_7",
+      "product_id": "prod_7",
+      "user_name": "رانيا مصطفى",
+      "rating": 5,
+      "content": "عزل الضوضاء في السماعات جبار والصوت نقي جداً ومريحة في الاستخدام الطويل.",
+      "created_at": "2026-09-10T15:58:58.207Z"
+    },
+    {
+      "_id": "rev_8",
+      "product_id": "prod_8",
+      "user_name": "خالد السعيد",
+      "rating": 4,
+      "content": "الهاتف تصويره فائق الدقة وشاشته سريعة والاستجابة سلسة جداً.",
+      "created_at": "2026-09-07T15:58:58.207Z"
+    },
+    {
+      "_id": "rev_9",
+      "product_id": "prod_9",
+      "user_name": "إسلام زكريا",
+      "rating": 5,
+      "content": "ساعة ذكية ممتازة وتتبع ضربات القلب والنوم دقيق وشحنها يدوم أسبوعاً كاملاً.",
+      "created_at": "2026-09-09T15:58:58.207Z"
+    },
+    {
+      "_id": "rev_10",
+      "product_id": "prod_10",
+      "user_name": "كريم عادل",
+      "rating": 5,
+      "content": "الحذاء مريح جداً في الجري لمسافات طويلة وخفيف الوزن وخامته ممتازة وأصلية.",
+      "created_at": "2026-09-05T15:58:58.207Z"
+    },
+    {
+      "_id": "rev_11",
+      "product_id": "prod_12",
+      "user_name": "دينا الحسيني",
+      "rating": 5,
+      "content": "ثبات العطر يدوم لأكثر من 24 ساعة ورائحته أنيقة وفخمة والعلبة وصلت مغلفة بإحكام.",
+      "created_at": "2026-09-10T15:58:58.207Z"
+    },
+    {
+      "_id": "rev_12",
+      "product_id": "prod_13",
+      "user_name": "سامح حسن",
+      "rating": 5,
+      "content": "الخلاط قوي جداً ويفرم الثلج والفواكه المجمدة في ثوانٍ، خامة الزجاج متينة وعملية.",
+      "created_at": "2026-09-09T15:58:58.207Z"
+    }
+  ],
+  "coupons": [
+    {
+      "coupon_code": "MATGARI10",
+      "discount": 10,
+      "end_time": "2030-01-01T00:00:00.000Z"
+    },
+    {
+      "coupon_code": "RAM20",
+      "discount": 20,
+      "end_time": "2030-01-01T00:00:00.000Z"
+    }
+  ],
+  "users": [
+    {
+      "_id": "usr_super",
+      "name": "المدير العام",
+      "email": "admin@matgari.com",
+      "password": "password123",
+      "role": "super_admin"
+    },
+    {
+      "_id": "usr_customer",
+      "name": "أحمد محمد",
+      "email": "user@matgari.com",
+      "password": "password123",
+      "role": "user"
+    }
+  ],
+  "orders": [
+    {
+      "_id": "ord_1",
+      "orderNumber": "ORD-7821",
+      "user_id": "usr_customer",
+      "user_name": "أحمد محمد",
+      "user_email": "user@matgari.com",
+      "products": [
+        {
+          "id": "prod_1",
+          "_id": "prod_1",
+          "name": "ثلاجة ذكية نوفروست 4 أبواب سعة 480 لتر مع شاشة لمس",
+          "image": "https://images.unsplash.com/photo-1584568694244-14fbdf83bd30?w=600&auto=format&fit=crop&q=80",
+          "price": 35700,
+          "quantity": 1
+        }
+      ],
+      "total_price": 35700,
+      "status": "delivered",
+      "created_at": "2026-09-09T15:58:58.207Z"
+    },
+    {
+      "_id": "ord_2",
+      "orderNumber": "ORD-8942",
+      "user_id": "usr_customer",
+      "user_name": "أحمد محمد",
+      "user_email": "user@matgari.com",
+      "products": [
+        {
+          "id": "prod_2",
+          "_id": "prod_2",
+          "name": "شاشة تلفزيون ذكية 65 بوصة 4K Ultra HD OLED بنظام Android",
+          "image": "https://images.unsplash.com/photo-1593359677879-a4bb92f829d1?w=600&auto=format&fit=crop&q=80",
+          "price": 31050,
+          "quantity": 1
+        }
+      ],
+      "total_price": 31050,
+      "status": "processing",
+      "created_at": "2026-09-10T15:58:58.207Z"
+    }
+  ]
+}

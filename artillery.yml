@@ -1,0 +1,166 @@
+config:
+  target: "http://localhost:3000"
+
+  # Generates unified account data (same email for both registration and login steps)
+  processor: "./artillery-helper.js"
+
+  phases:
+    # Note: These numbers were temporarily reduced to accommodate running the server,
+    # the database, and Artillery itself on the same laptop (a ZBook with 16GB
+    # of RAM). If you switch to running the server on a machine or VM separate
+    # from the load-generating machine, feel free to revert to the original
+    # figures (rampTo: 20 / arrivalRate: 20 / arrivalRate: 35).
+    - duration: 30
+      arrivalRate: 2
+      rampTo: 8
+      name: "1. Warm-up phase"
+
+    - duration: 90
+      arrivalRate: 8
+      name: "2. Sustained load stage"
+
+    - duration: 30
+      arrivalRate: 12
+      name: "3. Peak load stage"
+
+  payload:
+    path: "test-users.csv"
+    fields:
+      - "email"
+      - "password"
+    order: "random"
+
+  defaults:
+    headers:
+      Content-Type: "application/json"
+      X-Forwarded-For: "{{ vuserIp }}"
+
+scenarios:
+
+  - name: "1. Guest Browsing & AI Assistant"
+    weight: 30
+    flow:
+      - function: "setVirtualUserIp"
+
+      - get:
+          url: "/api/get_store_settings"
+
+      - get:
+          url: "/api/get_cloudinary_config"
+
+      - get:
+          url: "/api/get_all_sections"
+
+      - get:
+          url: "/api/get_products?page=1&limit=10"
+          capture:
+            - json: "$.data[0]._id"
+              as: "guestProductId"
+
+
+      - think: 2
+
+
+  - name: "2. Existing Customer Flow"
+    weight: 45
+    flow:
+      - function: "setVirtualUserIp"
+
+      - post:
+          url: "/api/auth/log_in"
+          json:
+            email: "{{ email }}"
+            password: "{{ password }}"
+
+      - get:
+          url: "/api/auth/me"
+
+      - get:
+          url: "/api/get_products?page=1&limit=10"
+          capture:
+            - json: "$.data[0]._id"
+              as: "targetProductId"
+
+      - think: 2
+
+      - post:
+          url: "/api/order"
+          json:
+            products:
+              - id: "{{ targetProductId }}"
+                quantity: 1
+          capture:
+            - json: "$.data._id"
+              as: "newOrderId"
+            - json: "$.data.orderNumber"
+              as: "newOrderNumber"
+
+      - get:
+          url: "/api/get_user_orders"
+
+      - post:
+          url: "/api/post_review"
+          json:
+            product_id: "{{ targetProductId }}"
+            review_text: "Excellent product and fast delivery—thank you!"
+
+
+      - post:
+          url: "/api/admin/add_problem"
+          json:
+            problem: "Inquiry regarding the order delivery date"
+            phone_number: "01012345678"
+            whatsApp_number: "01012345678"
+            GPS_URL: "https://maps.google.com/?q=30.0444,31.2357"
+            order_number: "{{ newOrderNumber }}"
+
+
+  - name: "3. New Customer Signup Flow"
+    weight: 25
+    flow:
+      - function: "setVirtualUserIp"
+
+      - function: "generateSignupData"
+
+      - post:
+          url: "/api/auth/register"
+          json:
+            name: "Load Test User"
+            email: "{{ newEmail }}"
+            password: "{{ newPassword }}"
+            phone_number: "{{ newPhone }}"
+            whatsApp_number: "{{ newWhatsapp }}"
+            GPS_URL: "https://maps.google.com/?q=30.0444,31.2357"
+
+      - post:
+          url: "/api/auth/log_in"
+          json:
+            email: "{{ newEmail }}"
+            password: "{{ newPassword }}"
+
+      - get:
+          url: "/api/auth/me"
+
+      - get:
+          url: "/api/get_products?page=1&limit=10"
+          capture:
+            - json: "$.data[0]._id"
+              as: "targetProductId"
+
+      - think: 2
+
+      - post:
+          url: "/api/order"
+          json:
+            products:
+              - id: "{{ targetProductId }}"
+                quantity: 1
+          capture:
+            - json: "$.data.orderNumber"
+              as: "newOrderNumber"
+
+      - post:
+          url: "/api/post_review"
+          json:
+            product_id: "{{ targetProductId }}"
+            review_text: "An excellent first experience!"

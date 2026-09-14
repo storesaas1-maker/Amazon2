@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>لوحة إدارة الطلبات | Matgari Admin</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              amazon: {
+                dark: "#0F1111",
+                nav: "#131921",
+                subnav: "#232F3E",
+                subnavHover: "#37475A",
+                orange: "#FF9900",
+                orangeHover: "#E68A00",
+                yellow: "#FFA41C",
+                yellowHover: "#FA8900",
+                bg: "#EAEDED",
+                surface: "#FFFFFF",
+                border: "#D5D9D9",
+                borderDark: "#A6A6A6",
+                borderLight: "#E7E7E7",
+                link: "#007185",
+                linkHover: "#C7511F",
+                success: "#067D62",
+                successBg: "#E7F4EE",
+                error: "#B12704",
+                errorBg: "#FCF4F4",
+                textMain: "#0F1111",
+                textMuted: "#565959"
+              }
+            },
+            fontFamily: {
+              cairo: ['Cairo', 'Inter', 'Arial', 'sans-serif']
+            }
+          }
+        }
+      }
+    </script>
+
+    <!-- Google Fonts & Font Awesome Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <link rel="stylesheet" href="/css/styles.css" />
+
+    <style>
+      body {
+        font-family: 'Cairo', sans-serif;
+        background-color: #EAEDED;
+        color: #0F1111;
+      }
+      .tab {
+        display: none;
+      }
+      .tab.active {
+        display: block;
+        animation: fadeIn 0.15s ease-in-out;
+      }
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(3px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      .custom-scrollbar::-webkit-scrollbar {
+        width: 5px;
+        height: 5px;
+      }
+      .custom-scrollbar::-webkit-scrollbar-thumb {
+        background-color: #A6A6A6;
+        border-radius: 2px;
+      }
+    </style>
+  </head>
+
+  <body data-dashboard="admin" class="min-h-screen flex flex-col bg-[#EAEDED] text-[#0F1111] antialiased">
+    
+    <div class="flex flex-col lg:flex-row min-h-screen">
+      
+      <!-- القائمة الجانبية (Sidebar) -->
+      <aside class="w-full lg:w-64 bg-[#131921] text-white flex-shrink-0 flex flex-col shadow-md z-20 border-l border-[#232F3E]">
+        <div class="p-4 bg-[#0F1111] border-b border-[#232F3E] flex items-center justify-between">
+          <div class="flex items-center gap-2.5">
+            <div class="w-8 h-8 rounded bg-[#FF9900] flex items-center justify-center text-[#0F1111] font-black text-base shadow-sm">
+              <i class="fa-solid fa-store"></i>
+            </div>
+            <div>
+              <h2 class="font-extrabold text-base tracking-tight text-white flex items-center gap-1">
+                <span>متجري</span>
+                <span class="text-[#FF9900] text-xs font-semibold">لوحة البائع</span>
+              </h2>
+              <span class="text-[11px] text-[#A6A6A6] font-medium flex items-center gap-1">
+                <span class="w-2 h-2 rounded-full bg-[#067D62]"></span>
+                مدير الطلبات (Admin)
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <nav class="p-2.5 space-y-1 flex-1 overflow-y-auto custom-scrollbar">
+          <button class="nav-tab-btn active w-full flex items-center gap-3 px-3 py-2.5 rounded text-xs font-bold transition-colors bg-[#FF9900] text-[#0F1111] shadow-sm" data-tab="overview-tab">
+            <i class="fa-solid fa-chart-pie w-4 text-center text-sm"></i>
+            <span>نظرة عامة والتقارير</span>
+          </button>
+
+          <button class="nav-tab-btn w-full flex items-center gap-3 px-3 py-2.5 rounded text-xs font-semibold text-slate-300 hover:bg-[#232F3E] hover:text-white transition-colors" data-tab="orders-tab">
+            <i class="fa-solid fa-bag-shopping w-4 text-center text-sm text-[#FF9900]"></i>
+            <span>إدارة الطلبات والمبيعات</span>
+          </button>
+        </nav>
+
+        <div class="p-3 border-t border-[#232F3E] bg-[#0F1111]/80">
+          <a href="/index.html" target="_blank" class="w-full flex items-center justify-center gap-2 px-3 py-2 rounded border border-[#565959] text-slate-200 hover:bg-[#232F3E] hover:text-white text-xs font-bold transition-colors">
+            <i class="fa-solid fa-arrow-up-right-from-square text-[11px] text-[#FF9900]"></i>
+            <span>معاينة واجهة المتجر</span>
+          </a>
+        </div>
+      </aside>
+
+      <!-- Main content area -->
+      <main class="flex-1 flex flex-col min-w-0 overflow-y-auto">
+        
+        <!-- Top Bar -->
+        <header class="bg-[#131921] text-white px-6 py-3 flex items-center justify-between sticky top-0 z-10 border-b border-[#232F3E] shadow-sm">
+          <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded bg-[#232F3E] border border-[#565959] flex items-center justify-center text-white text-sm">
+              <i class="fa-solid fa-user-shield"></i>
+            </div>
+            <div>
+              <p class="text-[11px] text-slate-400 leading-tight">مرحباً بك مجدداً،</p>
+              <h3 class="text-sm font-bold text-white flex items-center gap-2">
+                <span data-user-name>جاري التحميل...</span>
+              </h3>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-3">
+            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-[#067D62]/20 text-[#A7F3D0] border border-[#067D62]/50 text-xs font-semibold">
+              <i class="fa-solid fa-circle text-[7px] text-[#067D62] animate-pulse"></i>
+              النظام متصل ونشط
+            </span>
+          </div>
+        </header>
+
+        <div class="p-4 lg:p-6 space-y-6 flex-1 max-w-[1400px] w-full mx-auto">
+          
+          <!-- ============================================================ -->
+          <!-- 1. تبويب نظرة عامة (Overview Tab - 3 أعمدة رئيسية)             -->
+          <!-- ============================================================ -->
+          <section id="overview-tab" class="tab active space-y-5">
+            
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white p-4 rounded border border-[#D5D9D9] shadow-sm">
+              <div>
+                <h1 class="text-xl font-extrabold text-[#0F1111]">ملخص أداء المبيعات والنشاط</h1>
+                <p class="text-xs text-[#565959] mt-0.5">متابعة فورية للمدفوعات، وتدفق الطلبات، والعملاء النشطين.</p>
+              </div>
+              <button onclick="loadOverviewStats()" class="self-start sm:self-auto inline-flex items-center gap-1.5 px-3 py-1.5 rounded bg-white hover:bg-[#F7F7F7] text-[#0F1111] text-xs font-bold border border-[#D5D9D9] shadow-sm transition-colors">
+                <i class="fa-solid fa-arrows-rotate text-[#007185]"></i>
+                <span>تحديث البيانات</span>
+              </button>
+            </div>
+
+            <!-- بطاقات الـ KPIs الثلاثية -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              
+              <!-- 1. الأرباح المحققة -->
+              <div class="bg-white rounded border border-[#D5D9D9] p-4 shadow-sm hover:border-[#A6A6A6] transition-colors">
+                <div class="flex items-center justify-between mb-2">
+                  <span class="text-xs font-bold text-[#565959]">الأرباح المحققة (تم التوصيل)</span>
+                  <div class="w-8 h-8 rounded bg-[#E7F4EE] text-[#067D62] flex items-center justify-center text-sm">
+                    <i class="fa-solid fa-sack-dollar"></i>
+                  </div>
+                </div>
+                <strong id="metric-revenue" class="text-2xl font-black text-[#067D62] block">0.00 ج.م</strong>
+                <span class="text-[11px] text-[#067D62] font-semibold mt-1 inline-flex items-center gap-1">
+                  <i class="fa-solid fa-circle-check"></i>
+                  طلبات مكتملة ومحصلة
+                </span>
+              </div>
+
+              <!-- 2. إجمالي الطلبات -->
+              <div class="bg-white rounded border border-[#D5D9D9] p-4 shadow-sm hover:border-[#A6A6A6] transition-colors">
+                <div class="flex items-center justify-between mb-2">
+                  <span class="text-xs font-bold text-[#565959]">إجمالي الطلبات</span>
+                  <div class="w-8 h-8 rounded bg-[#FFF8E7] text-[#FF9900] flex items-center justify-center text-sm">
+                    <i class="fa-solid fa-bag-shopping"></i>
+                  </div>
+                </div>
+                <strong id="metric-orders-total" class="text-2xl font-black text-[#0F1111] block">0</strong>
+                <span class="text-[11px] text-[#565959] mt-1 block">كافة الطلبات المسجلة</span>
+              </div>
+
+              <!-- 3. العملاء المسجلون -->
+              <div class="bg-white rounded border border-[#D5D9D9] p-4 shadow-sm hover:border-[#A6A6A6] transition-colors">
+                <div class="flex items-center justify-between mb-2">
+                  <span class="text-xs font-bold text-[#565959]">العملاء المسجلون</span>
+                  <div class="w-8 h-8 rounded bg-sky-50 text-sky-700 flex items-center justify-center text-sm">
+                    <i class="fa-solid fa-user-tag"></i>
+                  </div>
+                </div>
+                <strong id="metric-users-real" class="text-2xl font-black text-[#0F1111] block">0</strong>
+                <span class="text-[11px] text-sky-700 font-semibold mt-1 block">من أصل <span id="metric-users-total">0</span> حساب كلي</span>
+              </div>
+
+            </div>
+
+            <!-- تفصيل حالات الشحن والطلبات -->
+            <div class="bg-white rounded border border-[#D5D9D9] p-4 shadow-sm space-y-3">
+              <h3 class="text-xs font-bold text-[#565959] uppercase tracking-wider flex items-center gap-1.5 border-b border-[#E7E7E7] pb-2">
+                <i class="fa-solid fa-dolly text-[#FF9900]"></i>
+                <span>حالات تدفق الطلبات والشحن</span>
+              </h3>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                <div class="p-3 rounded border border-[#BEE3F8] bg-[#EBF8FF] flex items-center justify-between">
+                  <div>
+                    <span class="text-xs font-bold text-[#2B6CB0] block">طلبات جديدة</span>
+                    <strong id="metric-orders-new" class="text-xl font-black text-[#0F1111]">0</strong>
+                    <span class="text-[10px] text-[#2B6CB0] block">بانتظار التأكيد</span>
+                  </div>
+                  <i class="fa-solid fa-bell text-[#2B6CB0] text-lg"></i>
+                </div>
+
+                <div class="p-3 rounded border border-[#FEEBC8] bg-[#FFF8E7] flex items-center justify-between">
+                  <div>
+                    <span class="text-xs font-bold text-[#B45309] block">قيد التنفيذ / بالانتظار</span>
+                    <strong id="metric-orders-processing" class="text-xl font-black text-[#0F1111]">0</strong>
+                    <span class="text-[10px] text-[#B45309] block">جاري التجهيز والشحن</span>
+                  </div>
+                  <i class="fa-solid fa-truck-fast text-[#B45309] text-lg"></i>
+                </div>
+
+                <div class="p-3 rounded border border-[#C6F6D5] bg-[#E7F4EE] flex items-center justify-between">
+                  <div>
+                    <span class="text-xs font-bold text-[#067D62] block">تم التوصيل (مستلمة)</span>
+                    <strong id="metric-orders-delivered" class="text-xl font-black text-[#067D62]">0</strong>
+                    <span class="text-[10px] text-[#067D62] block">طلبات مكتملة بنجاح</span>
+                  </div>
+                  <i class="fa-solid fa-box-circle-check text-[#067D62] text-lg"></i>
+                </div>
+
+                <div class="p-3 rounded border border-[#FED7D7] bg-[#FCF4F4] flex items-center justify-between">
+                  <div>
+                    <span class="text-xs font-bold text-[#B12704] block">ملغاة / مرفوضة</span>
+                    <strong id="metric-orders-cancelled" class="text-xl font-black text-[#B12704]">0</strong>
+                    <span class="text-[10px] text-[#B12704] block">تم إلغاء الطلب</span>
+                  </div>
+                  <i class="fa-solid fa-ban text-[#B12704] text-lg"></i>
+                </div>
+              </div>
+            </div>
+
+          </section>
+
+          <!-- ============================================================ -->
+          <!-- 2. تبويب إدارة الطلبات (Orders Tab)                          -->
+          <!-- ============================================================ -->
+          <section id="orders-tab" class="tab space-y-4">
+            
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white p-4 rounded border border-[#D5D9D9] shadow-sm">
+              <div>
+                <h1 class="text-xl font-extrabold text-[#0F1111] flex items-center gap-2">
+                  <i class="fa-solid fa-boxes-packing text-[#FF9900]"></i>
+                  <span>إدارة ومتابعة طلبات العملاء</span>
+                </h1>
+                <p class="text-xs text-[#565959] mt-0.5">تحديث الحالات لحظياً، الاتصال المباشر بالعملاء (هاتف / واتساب)، واستعراض الخرائط.</p>
+              </div>
+            </div>
+
+            <!-- جدول الطلبات -->
+            <div class="bg-white rounded border border-[#D5D9D9] shadow-sm overflow-hidden">
+              <div class="overflow-x-auto">
+                <table class="w-full text-right border-collapse text-xs">
+                  <thead>
+                    <tr class="bg-[#F0F2F2] border-b border-[#D5D9D9] text-[#565959] font-bold">
+                      <th class="py-3 px-4">رقم الطلب</th>
+                      <th class="py-3 px-4">اسم العميل</th>
+                      <th class="py-3 px-4">بيانات الاتصال (هاتف / واتساب)</th>
+                      <th class="py-3 px-4 text-center">الموقع الجغرافي</th>
+                      <th class="py-3 px-4">الإجمالي المطلوب</th>
+                      <th class="py-3 px-4">حالة الطلب والشحن</th>
+                      <th class="py-3 px-4 text-center">إجراءات</th>
+                    </tr>
+                  </thead>
+                  <tbody id="orders-list" class="divide-y divide-[#E7E7E7] text-[#0F1111]">
+                    <!-- يتم الحقن بواسطة JavaScript -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+          </section>
+
+        </div>
+      </main>
+    </div>
+
+    <!-- مكتبات Socket.io والـ Scripts -->
+    <script src="/socket.io/socket.io.js"></script>
+    <script type="module" src="/js/pages/admin.page.js"></script>
+  </body>
+</html>

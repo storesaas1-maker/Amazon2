@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>سلة التسوق والمشتريات — متجري</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <link rel="stylesheet" href="/css/styles.css" />
+  </head>
+  <body>
+    <!-- Global Header -->
+    <header data-site-header></header>
+
+    <main class="container">
+      <div class="cart-layout">
+        <!-- Left: Cart Items List -->
+        <section class="cart-items-panel" aria-label="عناصر سلة التسوق">
+          <div class="cart-panel-head">
+            <div>
+              <h1 style="font-size: 24px; font-weight: 800;">سلة التسوق</h1>
+              <p style="font-size: 13px; color: var(--text-secondary); margin-top: 4px;">
+                الأجهزة المجددة المحفوظة في سلتك مفحوصة ومضمونة لمدة 90 يوماً
+              </p>
+            </div>
+            <span class="cart-price-col-header">السعر</span>
+          </div>
+
+          <!-- Items Container -->
+          <div id="cart-items"></div>
+
+          <!-- Subtotal footer line -->
+          <div class="cart-subtotal-line" id="cart-subtotal-bottom">
+            المجموع الفرعي (<span id="cart-items-count-label">0</span> سلعة):
+            <strong id="cart-bottom-total" style="margin-inline-start: 8px;">0 ج.م</strong>
+          </div>
+        </section>
+
+        <!-- Right: Order Summary Box (Sec 16 & 17) -->
+        <aside class="cart-summary-box" aria-label="ملخص الطلب والدفع">
+          <div class="free-delivery-badge">
+            <i class="fa-solid fa-circle-check"></i>
+            <span>طلبك مؤهل للحصول على <strong>توصيل مجاني</strong>!</span>
+          </div>
+
+          <div style="font-size: 18px; font-weight: 700; margin-bottom: 16px;">
+            المجموع الفرعي (<span id="summary-items-count">0</span> سلعة):<br />
+            <strong style="font-size: 26px; color: var(--text-primary);" id="cart-total">0 ج.م</strong>
+          </div>
+
+          <form id="checkout" style="display: flex; flex-direction: column; gap: 14px;">
+            <div class="field" style="margin-bottom: 0;">
+              <label for="coupon-input" style="font-size: 13px; font-weight: 600;">كود الخصم أو القسيمة</label>
+              <div style="display: flex; gap: 6px;">
+                <input class="input" id="coupon-input" name="coupon" placeholder="أدخل الرمز الترويجي..." style="height: 38px; font-size: 13px;" />
+                <button type="button" class="button btn-secondary btn-sm" id="apply-coupon-btn" style="height: 38px; font-size: 13px;">تطبيق</button>
+              </div>
+            </div>
+
+            <div style="border-top: 1px solid var(--border-light); padding-top: 14px;">
+              <div class="summary-row">
+                <span>سعر المنتجات:</span>
+                <span id="summary-subtotal-val">0 ج.م</span>
+              </div>
+              <div class="summary-row">
+                <span>الشحن المعتمد:</span>
+                <span style="color: var(--success); font-weight: 700;">مجاني</span>
+              </div>
+              <div class="summary-row total">
+                <span>الإجمالي النهائي:</span>
+                <span id="summary-final-total">0 ج.م</span>
+              </div>
+            </div>
+
+            <button class="button btn-accent btn-block btn-lg" id="checkout-submit-btn" type="submit">
+              <i class="fa-solid fa-lock"></i> متابعة إتمام الطلب الآمن
+            </button>
+          </form>
+
+          <div class="buy-box-guarantees" style="margin-top: 20px;">
+            <span><i class="fa-solid fa-shield-halved"></i> حماية مشتريات وضمان استرداد 100%</span>
+            <span><i class="fa-solid fa-truck-fast"></i> شحن سريع وتسليم معتمد</span>
+            <span><i class="fa-solid fa-money-bill-wave"></i> الدفع عند الاستلام أو بالبطاقة</span>
+          </div>
+        </aside>
+      </div>
+    </main>
+
+    <!-- Global Footer -->
+    <footer data-site-footer></footer>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script type="module" src="/js/pages/cart.page.js"></script>
+  </body>
+</html>
