@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>تصفح المنتجات والأقسام — متجري</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <link rel="stylesheet" href="/css/styles.css" />
+  </head>
+  <body>
+    <!-- Global Header -->
+    <header data-site-header></header>
+
+    <main class="container" style="padding-bottom: var(--space-48);">
+      <!-- Breadcrumbs -->
+      <nav aria-label="مسار التنقل" style="padding: 12px 0; font-size: 13px; color: var(--text-secondary);">
+        <a href="/index.html">الرئيسية</a>
+        <span style="margin: 0 6px;">›</span>
+        <span style="color: var(--text-primary); font-weight: 600;">كافة المنتجات والأقسام</span>
+      </nav>
+
+      <!-- Desktop 2-Column Layout -->
+      <div class="catalog-layout">
+        <!-- Left Sidebar Filters -->
+        <aside class="catalog-sidebar" id="catalog-sidebar" aria-label="تصفية المنتجات">
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px;">
+            <h2 style="font-size: 16px; font-weight: 800;">الفلاتر والبحث</h2>
+            <button type="button" class="button btn-secondary btn-sm" id="clear-filters-btn" style="height: 28px; font-size: 12px; padding: 0 8px;">
+              مسح الكل
+            </button>
+          </div>
+
+          <form id="filters">
+            <!-- Hidden search input synced with header query if present -->
+            <input type="hidden" name="q" id="filter-q-input" value="" />
+            <input type="hidden" name="sort" id="filter-sort-input" value="" />
+            <input type="hidden" name="min_rating" id="filter-rating-input" value="" />
+            <input type="hidden" name="discount_min" id="filter-discount-input" value="" />
+
+            <!-- 1. Categories Filter -->
+            <div class="sidebar-filter-group">
+              <h3 class="sidebar-filter-title">القسم / الفئة</h3>
+              <div class="filter-list" id="sidebar-categories-list">
+                <label class="filter-item-label">
+                  <input type="radio" name="section" value="" checked />
+                  <span>جميع الأقسام</span>
+                </label>
+              </div>
+            </div>
+
+            <!-- 2. Price Range Filter -->
+            <div class="sidebar-filter-group">
+              <h3 class="sidebar-filter-title">نطاق السعر (ج.م)</h3>
+              <div class="filter-list" style="margin-bottom: 10px;">
+                <label class="filter-item-label">
+                  <input type="radio" name="price_preset" value="all" checked />
+                  <span>جميع الأسعار</span>
+                </label>
+                <label class="filter-item-label">
+                  <input type="radio" name="price_preset" value="0-2000" />
+                  <span>أقل من 2,000 ج.م</span>
+                </label>
+                <label class="filter-item-label">
+                  <input type="radio" name="price_preset" value="2000-10000" />
+                  <span>2,000 إلى 10,000 ج.م</span>
+                </label>
+                <label class="filter-item-label">
+                  <input type="radio" name="price_preset" value="10000-999999" />
+                  <span>أكثر من 10,000 ج.م</span>
+                </label>
+              </div>
+              <div class="filter-price-range">
+                <input class="input" type="number" name="min" id="price-min" placeholder="من" min="0" />
+                <span>–</span>
+                <input class="input" type="number" name="max" id="price-max" placeholder="إلى" min="0" />
+                <button type="button" class="button btn-secondary btn-sm" id="apply-price-btn">تطبيق</button>
+              </div>
+            </div>
+
+            <!-- 3. Customer Reviews Rating Filter -->
+            <div class="sidebar-filter-group">
+              <h3 class="sidebar-filter-title">تقييمات ومراجعات العملاء</h3>
+              <div class="filter-list">
+                <label class="filter-item-label">
+                  <input type="radio" name="rating_radio" value="" checked />
+                  <span>جميع المنتجات (مع أو بدون تقييم)</span>
+                </label>
+                <label class="filter-item-label">
+                  <input type="radio" name="rating_radio" value="has-reviews" />
+                  <span>المنتجات التي تم تقييمها فقط</span>
+                </label>
+                <label class="filter-item-label">
+                  <input type="radio" name="rating_radio" value="4.5" />
+                  <span class="rating-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i></span>
+                  <span style="font-size: 12px; margin-inline-start: 4px;">4.5 نجوم وأعلى</span>
+                </label>
+                <label class="filter-item-label">
+                  <input type="radio" name="rating_radio" value="4" />
+                  <span class="rating-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i></span>
+                  <span style="font-size: 12px; margin-inline-start: 4px;">4 نجوم وأعلى</span>
+                </label>
+                <label class="filter-item-label">
+                  <input type="radio" name="rating_radio" value="3" />
+                  <span class="rating-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i></span>
+                  <span style="font-size: 12px; margin-inline-start: 4px;">3 نجوم وأعلى</span>
+                </label>
+              </div>
+            </div>
+
+            <!-- 4. Discounts Filter -->
+            <div class="sidebar-filter-group">
+              <h3 class="sidebar-filter-title">التخفيضات والعروض</h3>
+              <div class="filter-list">
+                <label class="filter-item-label">
+                  <input type="radio" name="discount_radio" value="10" />
+                  <span>خصم 10% أو أكثر</span>
+                </label>
+                <label class="filter-item-label">
+                  <input type="radio" name="discount_radio" value="15" />
+                  <span>خصم 15% أو أكثر</span>
+                </label>
+              </div>
+            </div>
+
+            <!-- 5. Availability -->
+            <div class="sidebar-filter-group">
+              <h3 class="sidebar-filter-title">التوفر في المخزون</h3>
+              <label class="filter-item-label">
+                <input type="checkbox" name="in_stock" checked />
+                <span>المنتجات المتوفرة للشحن الفوري</span>
+              </label>
+            </div>
+          </form>
+
+          <button type="button" class="button btn-secondary btn-block" id="close-mobile-filters-btn" style="display: none; margin-top: 16px;">
+            إغلاق الفلاتر
+          </button>
+        </aside>
+
+        <!-- Right Products Section -->
+        <section aria-label="قائمة المنتجات">
+          <!-- Top Action Bar -->
+          <div class="catalog-top-bar">
+            <div class="results-summary" id="results-count-summary">
+              عرض النتائج لـ <strong>جميع المنتجات</strong>
+            </div>
+
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <button type="button" class="button btn-secondary btn-sm mobile-filter-trigger" id="open-mobile-filters-btn">
+                <i class="fa-solid fa-sliders"></i> الفلاتر
+              </button>
+
+              <div class="catalog-sort-wrap">
+                <label for="catalog-sort-select">الترتيب حسب:</label>
+                <select id="catalog-sort-select" aria-label="ترتيب المنتجات">
+                  <option value="">المقترح والافتراضي</option>
+                  <option value="top-rated">الأعلى تقييماً (النجوم)</option>
+                  <option value="most-reviews">الأكثر مراجعات وتعليقات</option>
+                  <option value="price-asc">السعر: من الأقل للأعلى</option>
+                  <option value="price-desc">السعر: من الأعلى للأقل</option>
+                  <option value="discount">أعلى نسبة خصم</option>
+                  <option value="bestseller">الأكثر مبيعاً</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- Active Filter Chips -->
+          <div class="filter-chips-bar" id="active-filter-chips" hidden></div>
+
+          <!-- Products Grid -->
+          <div class="product-grid" id="products"></div>
+
+          <!-- Sentinel for Infinite Scroll / Status -->
+          <div id="scroll-sentinel" style="padding: 24px 0; text-align: center; color: var(--text-secondary); font-size: 14px;"></div>
+        </section>
+      </div>
+    </main>
+
+    <!-- Global Footer -->
+    <footer data-site-footer></footer>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script type="module" src="/js/pages/products.page.js"></script>
+  </body>
+</html>

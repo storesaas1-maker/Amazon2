@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>تفاصيل ومواصفات المنتج — متجري</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <link rel="stylesheet" href="/css/styles.css" />
+  </head>
+  <body>
+    <!-- Global Header (Mounted dynamically) -->
+    <header data-site-header></header>
+
+    <main class="container" style="padding-bottom: var(--space-48);">
+      <!-- Breadcrumbs -->
+      <nav aria-label="مسار التنقل" style="padding: 12px 0; font-size: 13px; color: var(--text-secondary);" id="product-breadcrumbs">
+        <a href="/index.html">الرئيسية</a>
+        <span style="margin: 0 6px;">›</span>
+        <a href="/products.html">كافة المنتجات</a>
+        <span style="margin: 0 6px;">›</span>
+        <span id="breadcrumb-product-name" style="color: var(--text-primary); font-weight: 600;">تفاصيل المنتج</span>
+      </nav>
+
+      <!-- 3-Column Desktop Marketplace Product Layout (Loaded dynamically) -->
+      <div id="product-detail-container"></div>
+
+      <!-- Professional Reviews Section (Sec 13) -->
+      <section class="reviews-section" id="reviews-section" aria-label="مراجعات العملاء">
+        <h2 style="font-size: 22px; font-weight: 800; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid var(--border);">
+          مراجعات وتقييمات العملاء المعتمدة
+        </h2>
+
+        <div class="reviews-layout">
+          <!-- Left: Rating Overview & Breakdown -->
+          <div class="rating-overview">
+            <div style="display: flex; align-items: baseline; gap: 10px;">
+              <span class="rating-score-big" id="overview-rating-score">4.8</span>
+              <span style="font-size: 14px; color: var(--text-secondary);">من 5 نجوم</span>
+            </div>
+
+            <div class="rating-stars" style="font-size: 16px; margin-bottom: 6px;" id="overview-stars">
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star-half-stroke"></i>
+            </div>
+            <p style="font-size: 13px; color: var(--text-secondary);" id="overview-review-count">استناداً إلى 38 تقييم عميل موثق</p>
+
+            <!-- Rating distribution bars -->
+            <div class="rating-bars-list" id="overview-rating-bars">
+              <div class="rating-bar-row">
+                <span>5 نجوم</span>
+                <div class="rating-bar-track"><div class="rating-bar-fill" style="width: 100%;"></div></div>
+                <span>100%</span>
+              </div>
+            </div>
+
+            <!-- Review submission prompt -->
+            <div style="margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--border-light);">
+              <h4 style="font-size: 14px; margin-bottom: 6px;">هل اشتريت هذا المنتج؟</h4>
+              <p style="font-size: 12px; color: var(--text-secondary); margin-bottom: 12px;">شارك تجربتك مع المشترين الآخرين لمساعدتهم في اتخاذ القرار.</p>
+              <div id="review-auth-prompt" style="font-size: 13px;" hidden>
+                <a href="/login.html" class="button btn-secondary btn-sm btn-block">تسجيل الدخول كعضو</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: Customer Reviews & Submission Form -->
+          <div class="reviews-content-col">
+            <!-- Review submission form -->
+            <form id="review-form" style="background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 18px; margin-bottom: 24px;">
+              <h3 style="font-size: 15px; font-weight: 700; margin-bottom: 12px; color: var(--text-primary);"><i class="fa-regular fa-pen-to-square"></i> أضف تقييمك ومراجعتك للمنتج</h3>
+              
+              <!-- Star rating picker -->
+              <div class="field" style="margin-bottom: 14px;">
+                <label style="font-size: 13px; font-weight: 700; display: block; margin-bottom: 6px;">تقييمك للمنتج (بالنجوم):</label>
+                <div id="star-picker-wrap" style="display: flex; align-items: center; gap: 8px;">
+                  <div id="star-picker-btns" style="display: flex; gap: 4px; font-size: 22px; cursor: pointer; color: #f59e0b;">
+                    <i class="fa-solid fa-star star-option" data-val="1" title="1 نجمة - سيء"></i>
+                    <i class="fa-solid fa-star star-option" data-val="2" title="2 نجمتان - مقبول"></i>
+                    <i class="fa-solid fa-star star-option" data-val="3" title="3 نجوم - جيد"></i>
+                    <i class="fa-solid fa-star star-option" data-val="4" title="4 نجوم - جيد جداً"></i>
+                    <i class="fa-solid fa-star star-option" data-val="5" title="5 نجوم - ممتاز"></i>
+                  </div>
+                  <span id="star-picker-label" style="font-size: 13px; font-weight: 700; color: var(--text-primary); margin-inline-start: 6px;">5 نجوم (ممتاز)</span>
+                </div>
+                <input type="hidden" name="rating" id="review-rating-value" value="5" />
+              </div>
+
+              <!-- Reviewer Name (if not logged in) -->
+              <div id="review-name-field" class="field" style="margin-bottom: 12px;">
+                <label style="font-size: 13px; font-weight: 600; display: block; margin-bottom: 4px;">اسمك أو لقبك:</label>
+                <input class="input" type="text" name="user_name" placeholder="مثال: أحمد عبد الله" style="height: 38px; font-size: 13px;" />
+              </div>
+
+              <div class="field" style="margin-bottom: 12px;">
+                <label style="font-size: 13px; font-weight: 600; display: block; margin-bottom: 4px;">رأيك وتجربتك بالتفصيل:</label>
+                <textarea 
+                  class="input" 
+                  name="review_text" 
+                  required 
+                  placeholder="كيف كانت تجربة المنتج معك؟ شاركنا رأيك في الجودة، المطابقة للمواصفات، وسرعة التوصيل..."
+                  style="min-height: 85px;"
+                ></textarea>
+              </div>
+
+              <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap;">
+                <button class="button btn-accent btn-sm" type="submit" id="submit-review-btn">
+                  <i class="fa-solid fa-paper-plane"></i> نشر المراجعة والتقييم
+                </button>
+                <span style="font-size: 12px; color: var(--text-muted);"><i class="fa-solid fa-shield-halved"></i> تنشر فوراً وتظهر لجميع المشترين</span>
+              </div>
+            </form>
+
+            <!-- List of customer reviews -->
+            <div id="reviews-list"></div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Global Footer (Mounted dynamically) -->
+    <footer data-site-footer></footer>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script type="module" src="/js/pages/product.page.js"></script>
+  </body>
+</html>

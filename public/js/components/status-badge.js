@@ -1,0 +1,1 @@
+export function statusBadge(status) { const span = document.createElement('span'); span.className = `status status-${status || 'new'}`; span.textContent = ({ new: 'جديد', processing: 'قيد التجهيز', delivered: 'تم التسليم', cancelled: 'ملغي' })[status] || status || 'جديد'; return span; }

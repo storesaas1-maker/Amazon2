@@ -1,0 +1,824 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>لوحة إدارة متجري | Amazon Seller Style Dashboard</title>
+
+    <!-- Tailwind CSS CDN مع تخصيص نظام ألوان أمازون -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              amazon: {
+                dark: "#0F1111",
+                nav: "#131921",
+                subnav: "#232F3E",
+                subnavHover: "#37475A",
+                orange: "#FF9900",
+                orangeHover: "#E68A00",
+                yellow: "#FFA41C",
+                yellowHover: "#FA8900",
+                bg: "#EAEDED",
+                surface: "#FFFFFF",
+                border: "#D5D9D9",
+                borderDark: "#A6A6A6",
+                borderLight: "#E7E7E7",
+                link: "#007185",
+                linkHover: "#C7511F",
+                success: "#067D62",
+                successBg: "#E7F4EE",
+                error: "#B12704",
+                errorBg: "#FCF4F4",
+                textMain: "#0F1111",
+                textMuted: "#565959"
+              }
+            },
+            fontFamily: {
+              cairo: ['Cairo', 'Inter', 'Arial', 'sans-serif']
+            }
+          }
+        }
+      }
+    </script>
+
+    <!-- Google Fonts & Font Awesome Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <link rel="stylesheet" href="/css/styles.css" />
+
+    <style>
+      body {
+        font-family: 'Cairo', sans-serif;
+        background-color: #EAEDED;
+        color: #0F1111;
+      }
+      .tab {
+        display: none;
+      }
+      .tab.active {
+        display: block;
+        animation: fadeIn 0.15s ease-in-out;
+      }
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(3px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      .custom-scrollbar::-webkit-scrollbar {
+        width: 5px;
+        height: 5px;
+      }
+      .custom-scrollbar::-webkit-scrollbar-thumb {
+        background-color: #A6A6A6;
+        border-radius: 2px;
+      }
+      .drag-over {
+        border-color: #FF9900 !important;
+        background-color: #FFF8E7 !important;
+      }
+    </style>
+  </head>
+
+  <body data-dashboard="super" class="min-h-screen flex flex-col bg-[#EAEDED] text-[#0F1111] antialiased">
+    
+    <div class="flex flex-col lg:flex-row min-h-screen">
+      
+      <!-- ================================================================ -->
+      <!-- القائمة الجانبية بتصميم أمازون (Amazon Dark Sidebar)               -->
+      <!-- ================================================================ -->
+      <aside class="w-full lg:w-64 bg-[#131921] text-white flex-shrink-0 flex flex-col shadow-md z-20 border-l border-[#232F3E]">
+        
+        <!-- رأس القائمة والشعار -->
+        <div class="p-4 bg-[#0F1111] border-b border-[#232F3E] flex items-center justify-between">
+          <div class="flex items-center gap-2.5">
+            <div class="w-8 h-8 rounded bg-[#FF9900] flex items-center justify-center text-[#0F1111] font-black text-base shadow-sm">
+              <i class="fa-solid fa-store"></i>
+            </div>
+            <div>
+              <h2 class="font-extrabold text-base tracking-tight text-white flex items-center gap-1">
+                <span>متجري</span>
+                <span class="text-[#FF9900] text-xs font-semibold">لوحة البائع</span>
+              </h2>
+              <span class="text-[11px] text-[#A6A6A6] font-medium flex items-center gap-1">
+                <span class="w-2 h-2 rounded-full bg-[#067D62]"></span>
+                المدير العام (Admin)
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- أزرار التبويبات -->
+        <nav class="p-2.5 space-y-1 flex-1 overflow-y-auto custom-scrollbar">
+          <button class="nav-tab-btn active w-full flex items-center gap-3 px-3 py-2.5 rounded text-xs font-bold transition-colors bg-[#FF9900] text-[#0F1111] shadow-sm" data-tab="overview-tab">
+            <i class="fa-solid fa-chart-pie w-4 text-center text-sm"></i>
+            <span>نظرة عامة والتقارير</span>
+          </button>
+
+          <button class="nav-tab-btn w-full flex items-center gap-3 px-3 py-2.5 rounded text-xs font-semibold text-slate-300 hover:bg-[#232F3E] hover:text-white transition-colors" data-tab="orders-tab">
+            <i class="fa-solid fa-bag-shopping w-4 text-center text-sm text-[#FF9900]"></i>
+            <span>إدارة الطلبات والشحن</span>
+          </button>
+
+          <button class="nav-tab-btn w-full flex items-center gap-3 px-3 py-2.5 rounded text-xs font-semibold text-slate-300 hover:bg-[#232F3E] hover:text-white transition-colors" data-tab="products-tab">
+            <i class="fa-solid fa-boxes-stacked w-4 text-center text-sm text-[#067D62]"></i>
+            <span>الكتالوج والمخزون</span>
+          </button>
+
+          <button class="nav-tab-btn w-full flex items-center gap-3 px-3 py-2.5 rounded text-xs font-semibold text-slate-300 hover:bg-[#232F3E] hover:text-white transition-colors" data-tab="users-tab">
+            <i class="fa-solid fa-users-gear w-4 text-center text-sm text-sky-400"></i>
+            <span>المستخدمون والأدوار</span>
+          </button>
+
+          <button class="nav-tab-btn w-full flex items-center gap-3 px-3 py-2.5 rounded text-xs font-semibold text-slate-300 hover:bg-[#232F3E] hover:text-white transition-colors" data-tab="problems-tab">
+            <i class="fa-solid fa-triangle-exclamation w-4 text-center text-sm text-rose-400"></i>
+            <span>مشاكل العملاء</span>
+          </button>
+
+          <button class="nav-tab-btn w-full flex items-center gap-3 px-3 py-2.5 rounded text-xs font-semibold text-slate-300 hover:bg-[#232F3E] hover:text-white transition-colors" data-tab="coupons-tab">
+            <i class="fa-solid fa-ticket-simple w-4 text-center text-sm text-rose-400"></i>
+            <span>العروض والخصومات</span>
+          </button>
+
+          <button class="nav-tab-btn w-full flex items-center gap-3 px-3 py-2.5 rounded text-xs font-semibold text-slate-300 hover:bg-[#232F3E] hover:text-white transition-colors" data-tab="settings-tab">
+            <i class="fa-solid fa-sliders w-4 text-center text-sm text-purple-400"></i>
+            <span>إعدادات وهوية المتجر</span>
+          </button>
+        </nav>
+
+        <!-- روابط إضافية أسفل القائمة -->
+        <div class="p-3 border-t border-[#232F3E] bg-[#0F1111]/80">
+          <a href="/index.html" target="_blank" class="w-full flex items-center justify-center gap-2 px-3 py-2 rounded border border-[#565959] text-slate-200 hover:bg-[#232F3E] hover:text-white text-xs font-bold transition-colors">
+            <i class="fa-solid fa-arrow-up-right-from-square text-[11px] text-[#FF9900]"></i>
+            <span>معاينة واجهة المتجر</span>
+          </a>
+        </div>
+      </aside>
+
+      <!-- ================================================================ -->
+      <!-- المنطقة الرئيسية للمحتوى (Main Content Area)                      -->
+      <!-- ================================================================ -->
+      <main class="flex-1 flex flex-col min-w-0 overflow-y-auto">
+        
+        <!-- الشريط العلوي بتصميم أمازون (Amazon Header Bar) -->
+        <header class="bg-[#131921] text-white px-6 py-3 flex items-center justify-between sticky top-0 z-10 border-b border-[#232F3E] shadow-sm">
+          <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded bg-[#232F3E] border border-[#565959] flex items-center justify-center text-white text-sm">
+              <i class="fa-solid fa-user-shield"></i>
+            </div>
+            <div>
+              <p class="text-[11px] text-slate-400 leading-tight">مرحباً بك،</p>
+              <h3 class="text-sm font-bold text-white flex items-center gap-2">
+                <span data-user-name>المدير العام</span>
+              </h3>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-3">
+            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-[#067D62]/20 text-[#A7F3D0] border border-[#067D62]/50 text-xs font-semibold">
+              <i class="fa-solid fa-circle text-[7px] text-[#067D62] animate-pulse"></i>
+              الخادم متصل ونشط
+            </span>
+          </div>
+        </header>
+
+        <!-- مساحة التبويبات والمحتوى -->
+        <div class="p-4 lg:p-6 space-y-6 flex-1 max-w-[1400px] w-full mx-auto">
+          
+          <!-- ============================================================ -->
+          <!-- 1. تبويب نظرة عامة والأداء المالي (Amazon Overview Dashboard) -->
+          <!-- ============================================================ -->
+          <section id="overview-tab" class="tab active space-y-5">
+            
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white p-4 rounded border border-[#D5D9D9] shadow-sm">
+              <div>
+                <h1 class="text-xl font-extrabold text-[#0F1111]">ملخص أداء المبيعات والنشاط</h1>
+                <p class="text-xs text-[#565959] mt-0.5">متابعة فورية للمدفوعات، وتدفق الطلبات، والعملاء النشطين.</p>
+              </div>
+              <button onclick="loadOverviewStats()" class="self-start sm:self-auto inline-flex items-center gap-1.5 px-3 py-1.5 rounded bg-white hover:bg-[#F7F7F7] text-[#0F1111] text-xs font-bold border border-[#D5D9D9] shadow-sm transition-colors">
+                <i class="fa-solid fa-arrows-rotate text-[#007185]"></i>
+                <span>تحديث البيانات</span>
+              </button>
+            </div>
+
+            <!-- بطاقات الأداء المالي (KPIs Amazon Cards) -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              
+              <!-- إجمالي الأرباح المحققة -->
+              <div class="bg-white rounded border border-[#D5D9D9] p-4 shadow-sm hover:border-[#A6A6A6] transition-colors">
+                <div class="flex items-center justify-between mb-2">
+                  <span class="text-xs font-bold text-[#565959]">الأرباح المحققة (تم التوصيل)</span>
+                  <div class="w-8 h-8 rounded bg-[#E7F4EE] text-[#067D62] flex items-center justify-center text-sm">
+                    <i class="fa-solid fa-sack-dollar"></i>
+                  </div>
+                </div>
+                <strong id="metric-revenue" class="text-2xl font-black text-[#067D62] block">0.00 ج.م</strong>
+                <span class="text-[11px] text-[#067D62] font-semibold mt-1 inline-flex items-center gap-1">
+                  <i class="fa-solid fa-circle-check"></i>
+                  طلبات مكتملة ومحصلة
+                </span>
+              </div>
+
+              <!-- إجمالي الطلبات -->
+              <div class="bg-white rounded border border-[#D5D9D9] p-4 shadow-sm hover:border-[#A6A6A6] transition-colors">
+                <div class="flex items-center justify-between mb-2">
+                  <span class="text-xs font-bold text-[#565959]">إجمالي الطلبات</span>
+                  <div class="w-8 h-8 rounded bg-[#FFF8E7] text-[#FF9900] flex items-center justify-center text-sm">
+                    <i class="fa-solid fa-bag-shopping"></i>
+                  </div>
+                </div>
+                <strong id="metric-orders-total" class="text-2xl font-black text-[#0F1111] block">0</strong>
+                <span class="text-[11px] text-[#565959] mt-1 block">كافة الطلبات المسجلة</span>
+              </div>
+
+              <!-- العملاء الحقيقيون -->
+              <div class="bg-white rounded border border-[#D5D9D9] p-4 shadow-sm hover:border-[#A6A6A6] transition-colors">
+                <div class="flex items-center justify-between mb-2">
+                  <span class="text-xs font-bold text-[#565959]">العملاء المسجلون</span>
+                  <div class="w-8 h-8 rounded bg-sky-50 text-sky-700 flex items-center justify-center text-sm">
+                    <i class="fa-solid fa-user-tag"></i>
+                  </div>
+                </div>
+                <strong id="metric-users-real" class="text-2xl font-black text-[#0F1111] block">0</strong>
+                <span class="text-[11px] text-sky-700 font-semibold mt-1 block">من أصل <span id="metric-users-total">0</span> حساب كلي</span>
+              </div>
+
+              <!-- المنتجات بالمخزن -->
+              <div class="bg-white rounded border border-[#D5D9D9] p-4 shadow-sm hover:border-[#A6A6A6] transition-colors">
+                <div class="flex items-center justify-between mb-2">
+                  <span class="text-xs font-bold text-[#565959]">المنتجات النشطة</span>
+                  <div class="w-8 h-8 rounded bg-purple-50 text-purple-700 flex items-center justify-center text-sm">
+                    <i class="fa-solid fa-boxes-stacked"></i>
+                  </div>
+                </div>
+                <strong id="metric-products-total" class="text-2xl font-black text-[#0F1111] block">0</strong>
+                <span class="text-[11px] text-purple-700 font-semibold mt-1 block">منتجات متوفرة بالمخزون</span>
+              </div>
+
+            </div>
+
+            <!-- شبكة تفصيل حالات الشحن والطلبات -->
+            <div class="bg-white rounded border border-[#D5D9D9] p-4 shadow-sm space-y-3">
+              <h3 class="text-xs font-bold text-[#565959] uppercase tracking-wider flex items-center gap-1.5 border-b border-[#E7E7E7] pb-2">
+                <i class="fa-solid fa-dolly text-[#FF9900]"></i>
+                <span>حالات تدفق الطلبات والشحن</span>
+              </h3>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                
+                <!-- جديدة -->
+                <div class="p-3 rounded border border-[#BEE3F8] bg-[#EBF8FF] flex items-center justify-between">
+                  <div>
+                    <span class="text-xs font-bold text-[#2B6CB0] block">طلبات جديدة</span>
+                    <strong id="metric-orders-new" class="text-xl font-black text-[#0F1111]">0</strong>
+                    <span class="text-[10px] text-[#2B6CB0] block">بانتظار التأكيد</span>
+                  </div>
+                  <i class="fa-solid fa-bell text-[#2B6CB0] text-lg"></i>
+                </div>
+
+                <!-- قيد التنفيذ -->
+                <div class="p-3 rounded border border-[#FEEBC8] bg-[#FFF8E7] flex items-center justify-between">
+                  <div>
+                    <span class="text-xs font-bold text-[#B45309] block">قيد التنفيذ / بالانتظار</span>
+                    <strong id="metric-orders-processing" class="text-xl font-black text-[#0F1111]">0</strong>
+                    <span class="text-[10px] text-[#B45309] block">جاري التجهيز والشحن</span>
+                  </div>
+                  <i class="fa-solid fa-truck-fast text-[#B45309] text-lg"></i>
+                </div>
+
+                <!-- تم التوصيل -->
+                <div class="p-3 rounded border border-[#C6F6D5] bg-[#E7F4EE] flex items-center justify-between">
+                  <div>
+                    <span class="text-xs font-bold text-[#067D62] block">تم التوصيل (مستلمة)</span>
+                    <strong id="metric-orders-delivered" class="text-xl font-black text-[#067D62]">0</strong>
+                    <span class="text-[10px] text-[#067D62] block">طلبات مكتملة بنجاح</span>
+                  </div>
+                  <i class="fa-solid fa-box-circle-check text-[#067D62] text-lg"></i>
+                </div>
+
+                <!-- ملغية -->
+                <div class="p-3 rounded border border-[#FED7D7] bg-[#FCF4F4] flex items-center justify-between">
+                  <div>
+                    <span class="text-xs font-bold text-[#B12704] block">ملغاة / مرفوضة</span>
+                    <strong id="metric-orders-cancelled" class="text-xl font-black text-[#B12704]">0</strong>
+                    <span class="text-[10px] text-[#B12704] block">تم إلغاء الطلب</span>
+                  </div>
+                  <i class="fa-solid fa-ban text-[#B12704] text-lg"></i>
+                </div>
+
+              </div>
+            </div>
+
+          </section>
+
+          <!-- ============================================================ -->
+          <!-- 2. تبويب إدارة الطلبات (Amazon Orders Manager)                -->
+          <!-- ============================================================ -->
+          <section id="orders-tab" class="tab space-y-4">
+            <div class="flex items-center justify-between bg-white p-4 rounded border border-[#D5D9D9] shadow-sm">
+              <div>
+                <h1 class="text-xl font-extrabold text-[#0F1111]">إدارة الطلبات والمبيعات</h1>
+                <p class="text-xs text-[#565959] mt-0.5">تحديث الحالات لحظياً، التواصل المباشر مع العملاء عبر الهاتف والواتساب، واستعراض الخرائط.</p>
+              </div>
+            </div>
+
+            <!-- جدول الطلبات بتصميم جداول أمازون -->
+            <div class="bg-white rounded border border-[#D5D9D9] shadow-sm overflow-hidden">
+              <div class="overflow-x-auto">
+                <table class="w-full text-right border-collapse text-xs">
+                  <thead>
+                    <tr class="bg-[#F0F2F2] border-b border-[#D5D9D9] text-[#565959] font-bold">
+                      <th class="py-3 px-4">رقم الطلب</th>
+                      <th class="py-3 px-4">العميل</th>
+                      <th class="py-3 px-4">بيانات الاتصال (هاتف / واتساب)</th>
+                      <th class="py-3 px-4 text-center">الموقع الجغرافي</th>
+                      <th class="py-3 px-4">الإجمالي</th>
+                      <th class="py-3 px-4">حالة الشحن والطلب</th>
+                      <th class="py-3 px-4 text-center">إجراءات</th>
+                    </tr>
+                  </thead>
+                  <tbody id="orders-list" class="divide-y divide-[#E7E7E7] text-[#0F1111]">
+                    <!-- يتم الحقن بواسطة JavaScript -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+
+          <!-- ============================================================ -->
+          <!-- 3. تبويب المنتجات والكتالوج (Amazon Inventory Management)      -->
+          <!-- ============================================================ -->
+          <section id="products-tab" class="tab space-y-5">
+            <div class="flex items-center justify-between bg-white p-4 rounded border border-[#D5D9D9] shadow-sm">
+              <div>
+                <h1 class="text-xl font-extrabold text-[#0F1111]">كتالوج المنتجات والأقسام</h1>
+                <p class="text-xs text-[#565959] mt-0.5">إدارة المخزون، الأسعار، الخصومات، والرفع المباشر لصور المنتجات سحابياً.</p>
+              </div>
+            </div>
+
+            <!-- قسم إدارة وتصنيف الأقسام -->
+            <div class="bg-white rounded border border-[#D5D9D9] p-4 shadow-sm space-y-4">
+              <div class="flex items-center gap-2 text-[#0F1111] font-bold text-sm border-b border-[#E7E7E7] pb-2">
+                <i class="fa-solid fa-layer-group text-[#FF9900]"></i>
+                <span>الأقسام والتصنيفات الحالية</span>
+              </div>
+
+              <form id="section-form" class="flex flex-col sm:flex-row gap-2">
+                <input
+                  class="flex-1 bg-white border border-[#D5D9D9] focus:border-[#E77600] focus:ring-1 focus:ring-[#E77600] rounded px-3 py-2 text-xs text-[#0F1111] outline-none"
+                  name="section_name"
+                  required
+                  placeholder="اكتب اسم القسم الجديد (مثال: إلكترونيات، هواتف، عطور)..."
+                />
+                <button type="submit" class="bg-[#131921] hover:bg-[#232F3E] text-white px-5 py-2 rounded font-bold text-xs flex items-center justify-center gap-1.5 transition-colors">
+                  <i class="fa-solid fa-plus text-[#FF9900]"></i>
+                  <span>إضافة قسم</span>
+                </button>
+              </form>
+
+              <div id="sections-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5 pt-1">
+                <!-- يتم الحقن بواسطة JavaScript -->
+              </div>
+            </div>
+
+            <!-- إضافة منتج جديد -->
+            <div class="bg-white rounded border border-[#D5D9D9] p-5 shadow-sm space-y-5">
+              <div class="flex items-center gap-2 text-[#0F1111] font-bold text-base border-b border-[#E7E7E7] pb-3">
+                <i class="fa-solid fa-cart-plus text-[#067D62]"></i>
+                <span>إضافة منتج جديد للكتالوج</span>
+              </div>
+
+              <form id="product-form" class="space-y-4" novalidate>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  <!-- الاسم -->
+                  <div class="space-y-1">
+                    <label class="block text-xs font-bold text-[#0F1111]">اسم المنتج <span class="text-[#B12704]">*</span></label>
+                    <input
+                      class="w-full bg-white border border-[#D5D9D9] focus:border-[#E77600] focus:ring-1 focus:ring-[#E77600] rounded px-3 py-2 text-xs text-[#0F1111] outline-none"
+                      name="product_name"
+                      required
+                      placeholder="مثال: Apple iPhone 15 Pro Max (256GB)"
+                    />
+                  </div>
+
+                  <!-- القسم -->
+                  <div class="space-y-1">
+                    <label class="block text-xs font-bold text-[#0F1111]">القسم / الفئة <span class="text-[#B12704]">*</span></label>
+                    <select
+                      id="product-section"
+                      name="section"
+                      required
+                      class="w-full bg-[#F0F2F2] border border-[#D5D9D9] focus:border-[#E77600] focus:bg-white rounded px-3 py-2 text-xs font-bold text-[#0F1111] outline-none cursor-pointer"
+                    ></select>
+                  </div>
+
+                  <!-- السعر -->
+                  <div class="space-y-1">
+                    <label class="block text-xs font-bold text-[#0F1111]">السعر الأساسي (ج.م) <span class="text-[#B12704]">*</span></label>
+                    <input
+                      class="w-full bg-white border border-[#D5D9D9] focus:border-[#E77600] focus:ring-1 focus:ring-[#E77600] rounded px-3 py-2 text-xs text-[#0F1111] outline-none"
+                      name="product_price"
+                      type="number"
+                      min="0"
+                      step="any"
+                      required
+                      placeholder="0.00"
+                    />
+                  </div>
+
+                  <!-- نسبة الخصم -->
+                  <div class="space-y-1">
+                    <label class="block text-xs font-bold text-[#0F1111]">نسبة الخصم (%)</label>
+                    <input
+                      class="w-full bg-white border border-[#D5D9D9] focus:border-[#E77600] focus:ring-1 focus:ring-[#E77600] rounded px-3 py-2 text-xs text-[#0F1111] outline-none"
+                      name="product_discount"
+                      type="number"
+                      min="0"
+                      max="100"
+                      value="0"
+                      required
+                    />
+                  </div>
+
+                  <!-- الكمية -->
+                  <div class="space-y-1">
+                    <label class="block text-xs font-bold text-[#0F1111]">الكمية المتوفرة بالمخزون <span class="text-[#B12704]">*</span></label>
+                    <input
+                      class="w-full bg-white border border-[#D5D9D9] focus:border-[#E77600] focus:ring-1 focus:ring-[#E77600] rounded px-3 py-2 text-xs text-[#0F1111] outline-none"
+                      name="quantity"
+                      type="number"
+                      min="0"
+                      value="10"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <!-- الوصف -->
+                <div class="space-y-1">
+                  <label class="block text-xs font-bold text-[#0F1111]">مواصفات وتفاصيل المنتج <span class="text-[#B12704]">*</span></label>
+                  <textarea
+                    class="w-full bg-white border border-[#D5D9D9] focus:border-[#E77600] focus:ring-1 focus:ring-[#E77600] rounded px-3 py-2 text-xs text-[#0F1111] outline-none min-h-[75px]"
+                    name="product_description"
+                    required
+                    placeholder="اكتب مواصفات المنتج الكاملة، الضمان، والمميزات..."
+                  ></textarea>
+                </div>
+
+                <!-- دروب زون رفع الصور السحابية Cloudinary -->
+                <div class="p-4 bg-[#F7F7F7] rounded border border-[#D5D9D9] space-y-3">
+                  <label class="block text-xs font-bold text-[#0F1111]">
+                    <i class="fa-solid fa-cloud-arrow-up text-[#FF9900] ml-1"></i>
+                    صورة المنتج (رفع فوري أو استخدام رابط مباشر) <span class="text-[#B12704]">*</span>
+                  </label>
+
+                  <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 items-start">
+                    <div class="lg:col-span-7">
+                      <div id="product-drop-zone" class="border-2 border-dashed border-[#D5D9D9] hover:border-[#FF9900] bg-white rounded p-5 text-center cursor-pointer transition-colors flex flex-col items-center justify-center min-h-[140px]">
+                        <input id="product-image-file" type="file" accept="image/*" class="hidden" />
+                        <div class="w-10 h-10 rounded-full bg-[#FFF8E7] text-[#FF9900] flex items-center justify-center text-lg mb-1.5">
+                          <i class="fa-solid fa-image"></i>
+                        </div>
+                        <p class="text-xs font-bold text-[#0F1111] mb-0.5">اسحب وأفلت صورة المنتج هنا، أو <span class="text-[#007185] underline">تصفح ملفاتك</span></p>
+                        <p class="text-[11px] text-[#565959]">يتم الرفع وتوليد الرابط تلقائياً</p>
+                      </div>
+
+                      <div id="product-progress-container" class="hidden mt-2 space-y-1">
+                        <div class="flex justify-between text-[11px] font-bold text-[#565959]">
+                          <span id="product-progress-text">جاري الرفع...</span>
+                          <span id="product-progress-percent">0%</span>
+                        </div>
+                        <div class="w-full bg-[#E7E7E7] h-1.5 rounded overflow-hidden">
+                          <div id="product-progress-bar" class="bg-[#FF9900] h-full w-0 transition-all duration-150"></div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="lg:col-span-5 space-y-2.5">
+                      <div>
+                        <span class="text-[11px] font-bold text-[#565959] block mb-1">الرابط المباشر للصورة:</span>
+                        <input
+                          id="product-image-url"
+                          class="w-full bg-white border border-[#D5D9D9] rounded px-3 py-2 text-xs font-mono text-[#0F1111] outline-none focus:border-[#E77600]"
+                          name="image"
+                          type="text"
+                          placeholder="https://..."
+                        />
+                      </div>
+
+                      <div class="flex items-center gap-3 bg-white p-2.5 rounded border border-[#D5D9D9]">
+                        <div class="w-12 h-12 rounded bg-[#F0F2F2] border border-[#D5D9D9] flex items-center justify-center overflow-hidden flex-shrink-0">
+                          <img id="product-preview-img" src="" alt="Preview" class="hidden w-full h-full object-contain p-1" />
+                          <i id="product-preview-placeholder" class="fa-regular fa-image text-[#A6A6A6] text-lg"></i>
+                        </div>
+                        <div class="text-xs">
+                          <p class="font-bold text-[#0F1111]">معاينة الصورة</p>
+                          <span id="product-image-status" class="text-[10px] text-[#565959]">لم يتم اختيار صورة</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <button id="add-product-submit-btn" type="submit" class="bg-[#FF9900] hover:bg-[#E68A00] text-[#0F1111] border border-[#A88734] font-extrabold px-6 py-2.5 rounded text-xs shadow-sm flex items-center justify-center gap-2 transition-colors">
+                  <i class="fa-solid fa-plus-circle"></i>
+                  <span>إضافة المنتج للمتجر</span>
+                </button>
+              </form>
+            </div>
+
+            <!-- شبكة عرض المنتجات -->
+            <div class="space-y-3">
+              <div class="flex items-center justify-between border-b border-[#D5D9D9] pb-2">
+                <h3 class="text-sm font-black text-[#0F1111]">المنتجات المعروضة للبيع حالياً</h3>
+              </div>
+              <div id="products-list" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                <!-- يتم الحقن بواسطة JavaScript -->
+              </div>
+            </div>
+          </section>
+
+          <!-- ============================================================ -->
+          <!-- 4. تبويب إدارة المستخدمين (Amazon User Permissions)           -->
+          <!-- ============================================================ -->
+          <section id="users-tab" class="tab space-y-4">
+            <div class="flex items-center justify-between bg-white p-4 rounded border border-[#D5D9D9] shadow-sm">
+              <div>
+                <h1 class="text-xl font-extrabold text-[#0F1111]">إدارة المستخدمين والأدوار</h1>
+                <p class="text-xs text-[#565959] mt-0.5">ترقية المستخدمين لمدراء، تعديل الصلاحيات، وإدارة العملاء المسجلين.</p>
+              </div>
+            </div>
+
+            <div class="bg-white rounded border border-[#D5D9D9] shadow-sm overflow-hidden">
+              <div class="overflow-x-auto">
+                <table class="w-full text-right border-collapse text-xs">
+                  <thead>
+                    <tr class="bg-[#F0F2F2] border-b border-[#D5D9D9] text-[#565959] font-bold">
+                      <th class="py-3 px-4">اسم المستخدم</th>
+                      <th class="py-3 px-4">البريد الإلكتروني</th>
+                      <th class="py-3 px-4">الدور الوظيفي</th>
+                      <th class="py-3 px-4 text-center">إجراءات الصلاحية</th>
+                    </tr>
+                  </thead>
+                  <tbody id="users-list" class="divide-y divide-[#E7E7E7] text-[#0F1111]">
+                    <!-- يتم الحقن بواسطة JavaScript -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+
+          <!-- ============================================================ -->
+          <!-- مشاكل العملاء وبلاغات الدعم (Customer Problems)              -->
+          <!-- ============================================================ -->
+          <section id="problems-tab" class="tab space-y-4">
+            <div class="flex items-center justify-between bg-white p-4 rounded border border-[#D5D9D9] shadow-sm">
+              <div>
+                <h1 class="text-xl font-extrabold text-[#0F1111]">مشاكل العملاء والبلاغات</h1>
+                <p class="text-xs text-[#565959] mt-0.5">البلاغات اللي بعتها العملاء من صفحة مركز المساعدة.</p>
+              </div>
+            </div>
+
+            <div class="bg-white rounded border border-[#D5D9D9] shadow-sm overflow-hidden">
+              <div class="overflow-x-auto">
+                <table class="w-full text-right border-collapse text-xs">
+                  <thead>
+                    <tr class="bg-[#F0F2F2] border-b border-[#D5D9D9] text-[#565959] font-bold">
+                      <th class="py-3 px-4">تفاصيل المشكلة</th>
+                      <th class="py-3 px-4">رقم الطلب</th>
+                      <th class="py-3 px-4">بيانات الاتصال</th>
+                      <th class="py-3 px-4 text-center">الموقع</th>
+                      <th class="py-3 px-4 text-center">الصورة</th>
+                      <th class="py-3 px-4 text-center">تاريخ البلاغ</th>
+                    </tr>
+                  </thead>
+                  <tbody id="problems-list" class="divide-y divide-[#E7E7E7] text-[#0F1111]">
+                    <!-- يتم الحقن بواسطة JavaScript -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+
+          <!-- ============================================================ -->
+          <!-- 5. تبويب الكوبونات والعروض (Amazon Coupons / Deals)          -->
+          <!-- ============================================================ -->
+          <section id="coupons-tab" class="tab space-y-4">
+            <div class="flex items-center justify-between bg-white p-4 rounded border border-[#D5D9D9] shadow-sm">
+              <div>
+                <h1 class="text-xl font-extrabold text-[#0F1111]">إنشاء وإدارة الكوبونات الترويجية</h1>
+                <p class="text-xs text-[#565959] mt-0.5">تفعيل رموز التخفيض ونسب الخصم التسويقية لزيادة المبيعات.</p>
+              </div>
+            </div>
+
+            <div class="bg-white rounded border border-[#D5D9D9] p-5 shadow-sm max-w-2xl">
+              <form id="coupon-form" class="space-y-4">
+                <div class="space-y-1">
+                  <label class="block text-xs font-bold text-[#0F1111]">رمز الكوبون الترويجي <span class="text-[#B12704]">*</span></label>
+                  <input
+                    class="w-full bg-white border border-[#D5D9D9] focus:border-[#E77600] focus:ring-1 focus:ring-[#E77600] rounded px-3 py-2 text-xs uppercase font-extrabold text-[#0F1111] outline-none"
+                    name="coupon_name"
+                    required
+                    placeholder="مثال: PRIME20 أو EID2026"
+                  />
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div class="space-y-1">
+                    <label class="block text-xs font-bold text-[#0F1111]">نسبة الخصم (%) <span class="text-[#B12704]">*</span></label>
+                    <input
+                      class="w-full bg-white border border-[#D5D9D9] focus:border-[#E77600] rounded px-3 py-2 text-xs text-[#0F1111] outline-none"
+                      name="discount"
+                      type="number"
+                      min="1"
+                      max="100"
+                      required
+                      placeholder="15"
+                    />
+                  </div>
+
+                  <div class="space-y-1">
+                    <label class="block text-xs font-bold text-[#0F1111]">تاريخ انتهاء الكوبون <span class="text-[#B12704]">*</span></label>
+                    <input
+                      class="w-full bg-white border border-[#D5D9D9] focus:border-[#E77600] rounded px-3 py-2 text-xs text-[#0F1111] outline-none cursor-pointer"
+                      name="end_time"
+                      type="datetime-local"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <button type="submit" class="bg-[#131921] hover:bg-[#232F3E] text-white font-bold px-6 py-2.5 rounded text-xs transition-colors flex items-center justify-center gap-1.5">
+                  <i class="fa-solid fa-save text-[#FF9900]"></i>
+                  <span>حفظ وتفعيل الكوبون</span>
+                </button>
+              </form>
+            </div>
+          </section>
+
+          <!-- ============================================================ -->
+          <!-- 6. تبويب إعدادات وهوية المتجر (Amazon Storefront Settings)     -->
+          <!-- ============================================================ -->
+          <section id="settings-tab" class="tab space-y-4">
+            <div class="flex items-center justify-between bg-white p-4 rounded border border-[#D5D9D9] shadow-sm">
+              <div>
+                <h1 class="text-xl font-extrabold text-[#0F1111]">إعدادات وهوية المتجر</h1>
+                <p class="text-xs text-[#565959] mt-0.5">تخصيص بيانات الاتصال، رابط الموقع، وشريط الإعلانات الترويجي.</p>
+              </div>
+            </div>
+
+            <div class="bg-white rounded border border-[#D5D9D9] p-5 shadow-sm">
+              <form id="settings-form" class="space-y-5">
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div class="space-y-1">
+                    <label class="block text-xs font-bold text-[#0F1111]">اسم المتجر الرسمي</label>
+                    <input class="w-full bg-white border border-[#D5D9D9] focus:border-[#E77600] rounded px-3 py-2 text-xs" name="store_name" required />
+                  </div>
+
+                  <div class="space-y-1">
+                    <label class="block text-xs font-bold text-[#0F1111]">وصف المتجر (SEO)</label>
+                    <input class="w-full bg-white border border-[#D5D9D9] focus:border-[#E77600] rounded px-3 py-2 text-xs" name="store_description" required />
+                  </div>
+
+                  <div class="space-y-1">
+                    <label class="block text-xs font-bold text-[#0F1111]">رقم هاتف خدمة العملاء</label>
+                    <input class="w-full bg-white border border-[#D5D9D9] focus:border-[#E77600] rounded px-3 py-2 text-xs font-mono" name="store_phone" required />
+                  </div>
+
+                  <div class="space-y-1">
+                    <label class="block text-xs font-bold text-[#0F1111]">رقم الواتساب الرسمي (WhatsApp)</label>
+                    <input class="w-full bg-white border border-[#D5D9D9] focus:border-[#E77600] rounded px-3 py-2 text-xs font-mono" name="store_whatsApp_number" required />
+                  </div>
+
+                  <div class="space-y-1 md:col-span-2">
+                    <label class="block text-xs font-bold text-[#0F1111]">رابط الموقع الجغرافي (Google Maps URL)</label>
+                    <input class="w-full bg-white border border-[#D5D9D9] focus:border-[#E77600] rounded px-3 py-2 text-xs font-mono" name="store_GPS" required />
+                  </div>
+                </div>
+
+                <div class="border-t border-[#E7E7E7] pt-4 space-y-3">
+                  <h4 class="font-bold text-xs text-[#0F1111]">ألوان الهوية والخط</h4>
+                  
+                  <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                    <div class="bg-[#F7F7F7] p-2.5 rounded border border-[#D5D9D9] flex items-center justify-between">
+                      <span class="text-[11px] font-bold text-[#565959]">اللون الرئيسي</span>
+                      <input name="primary_color" type="color" value="#131921" class="w-6 h-6 rounded border-0 cursor-pointer bg-transparent" />
+                    </div>
+
+                    <div class="bg-[#F7F7F7] p-2.5 rounded border border-[#D5D9D9] flex items-center justify-between">
+                      <span class="text-[11px] font-bold text-[#565959]">اللون الثانوي</span>
+                      <input name="secondary_color" type="color" value="#FF9900" class="w-6 h-6 rounded border-0 cursor-pointer bg-transparent" />
+                    </div>
+
+                    <div class="bg-[#F7F7F7] p-2.5 rounded border border-[#D5D9D9] flex items-center justify-between">
+                      <span class="text-[11px] font-bold text-[#565959]">الخلفية</span>
+                      <input name="background_color" type="color" value="#EAEDED" class="w-6 h-6 rounded border-0 cursor-pointer bg-transparent" />
+                    </div>
+
+                    <div class="bg-[#F7F7F7] p-2.5 rounded border border-[#D5D9D9] flex items-center justify-between">
+                      <span class="text-[11px] font-bold text-[#565959]">لون النصوص</span>
+                      <input name="text_color" type="color" value="#0F1111" class="w-6 h-6 rounded border-0 cursor-pointer bg-transparent" />
+                    </div>
+                  </div>
+
+                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+                    <div class="space-y-1">
+                      <label class="block text-xs font-bold text-[#0F1111]">نوع الخط الأساسي</label>
+                      <select name="font_family" class="w-full bg-white border border-[#D5D9D9] rounded px-3 py-2 text-xs font-semibold">
+                        <option value="Cairo, sans-serif">Cairo</option>
+                        <option value="Inter, sans-serif">Inter</option>
+                      </select>
+                    </div>
+
+                    <div class="space-y-1">
+                      <label class="block text-xs font-bold text-[#0F1111]">نص الشريط الترحيبي والإعلاني</label>
+                      <input class="w-full bg-white border border-[#D5D9D9] rounded px-3 py-2 text-xs" name="banner_text" placeholder="مثال: خصومات حصرية وتوصيل سريع لكافة المحافظات" />
+                    </div>
+                  </div>
+                </div>
+
+                <button type="submit" class="bg-[#FF9900] hover:bg-[#E68A00] text-[#0F1111] border border-[#A88734] font-extrabold px-6 py-2.5 rounded text-xs shadow-sm transition-colors">
+                  حفظ كافة الإعدادات
+                </button>
+              </form>
+            </div>
+          </section>
+
+        </div>
+      </main>
+    </div>
+
+    <!-- نافذة تعديل المنتج المتطورة بتصميم أمازون (Amazon Edit Modal) -->
+    <div id="edit-product-modal" class="fixed inset-0 z-50 bg-[#0F1111]/70 backdrop-blur-xs hidden flex items-center justify-center p-4">
+      <div class="bg-white rounded border border-[#D5D9D9] max-w-xl w-full p-5 shadow-2xl max-h-[90vh] overflow-y-auto custom-scrollbar space-y-4">
+        <div class="flex items-center justify-between border-b border-[#E7E7E7] pb-3">
+          <h3 class="text-base font-extrabold text-[#0F1111] flex items-center gap-2">
+            <i class="fa-solid fa-pen-to-square text-[#FF9900]"></i>
+            <span>تعديل تفاصيل المنتج</span>
+          </h3>
+          <button id="close-edit-modal-btn" class="w-7 h-7 rounded hover:bg-[#F0F2F2] text-[#565959] flex items-center justify-center text-sm transition-colors">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+
+        <form id="edit-product-form" class="space-y-3" novalidate>
+          <input type="hidden" id="edit-product-id" name="product_id" />
+          
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div class="space-y-1">
+              <label class="block text-xs font-bold text-[#0F1111]">اسم المنتج</label>
+              <input id="edit-product-name" name="product_name" class="w-full bg-white border border-[#D5D9D9] rounded px-3 py-2 text-xs" required />
+            </div>
+
+            <div class="space-y-1">
+              <label class="block text-xs font-bold text-[#0F1111]">القسم</label>
+              <select id="edit-product-section" name="section" class="w-full bg-[#F0F2F2] border border-[#D5D9D9] rounded px-3 py-2 text-xs font-bold" required></select>
+            </div>
+
+            <div class="space-y-1">
+              <label class="block text-xs font-bold text-[#0F1111]">السعر (ج.م)</label>
+              <input id="edit-product-price" name="product_price" type="number" step="any" min="0" class="w-full bg-white border border-[#D5D9D9] rounded px-3 py-2 text-xs" required />
+            </div>
+
+            <div class="space-y-1">
+              <label class="block text-xs font-bold text-[#0F1111]">الخصم (%)</label>
+              <input id="edit-product-discount" name="product_discount" type="number" min="0" max="100" class="w-full bg-white border border-[#D5D9D9] rounded px-3 py-2 text-xs" required />
+            </div>
+
+            <div class="space-y-1 sm:col-span-2">
+              <label class="block text-xs font-bold text-[#0F1111]">الكمية المتوفرة</label>
+              <input id="edit-product-quantity" name="quantity" type="number" min="0" class="w-full bg-white border border-[#D5D9D9] rounded px-3 py-2 text-xs" required />
+            </div>
+          </div>
+
+          <div class="space-y-1">
+            <label class="block text-xs font-bold text-[#0F1111]">الوصف</label>
+            <textarea id="edit-product-description" name="product_description" class="w-full bg-white border border-[#D5D9D9] rounded px-3 py-2 text-xs min-h-[65px]" required></textarea>
+          </div>
+
+          <div class="p-3 bg-[#F7F7F7] rounded border border-[#D5D9D9] space-y-2">
+            <label class="block text-xs font-bold text-[#0F1111]">تحديث صورة المنتج</label>
+            <input id="edit-image-file" type="file" accept="image/*" class="text-xs text-[#565959] file:mr-2 file:py-1 file:px-3 file:rounded file:border file:border-[#D5D9D9] file:text-xs file:font-bold file:bg-white file:text-[#0F1111] hover:file:bg-[#F0F2F2] cursor-pointer" />
+            <input id="edit-product-image" name="image" type="text" class="w-full bg-white border border-[#D5D9D9] rounded px-3 py-1.5 text-xs font-mono" placeholder="رابط الصورة..." />
+            <div id="edit-progress-container" class="hidden w-full bg-[#E7E7E7] h-1 rounded overflow-hidden">
+              <div id="edit-progress-bar" class="bg-[#FF9900] h-full w-0 transition-all duration-150"></div>
+            </div>
+          </div>
+
+          <div class="flex items-center justify-end gap-2 pt-3 border-t border-[#E7E7E7]">
+            <button type="button" id="cancel-edit-btn" class="px-4 py-2 rounded border border-[#D5D9D9] bg-white hover:bg-[#F7F7F7] text-[#0F1111] font-bold text-xs">إلغاء</button>
+            <button type="submit" id="save-edit-btn" class="px-5 py-2 rounded bg-[#FF9900] hover:bg-[#E68A00] border border-[#A88734] text-[#0F1111] font-extrabold text-xs shadow-sm">حفظ التعديلات</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- مكتبات Socket.io والـ Scripts -->
+    <script src="/socket.io/socket.io.js"></script>
+    <script type="module" src="/js/pages/dashboard.page.js"></script>
+  </body>
+</html>

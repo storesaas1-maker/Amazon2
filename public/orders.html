@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>طلباتي ومشترياتي — متجري</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <link rel="stylesheet" href="/css/styles.css" />
+  </head>
+  <body>
+    <!-- Global Header -->
+    <header data-site-header></header>
+
+    <main class="container" style="padding-bottom: var(--space-48);">
+      <!-- Breadcrumbs -->
+      <nav aria-label="مسار التنقل" style="padding: 12px 0; font-size: 13px; color: var(--text-secondary);">
+        <a href="/index.html">الرئيسية</a>
+        <span style="margin: 0 6px;">›</span>
+        <span>حسابك</span>
+        <span style="margin: 0 6px;">›</span>
+        <strong style="color: var(--text-primary);">طلباتك</strong>
+      </nav>
+
+      <div class="orders-page-header">
+        <h1 style="font-size: 26px; font-weight: 800;">طلباتك ومشترياتك</h1>
+        <p style="font-size: 13px; color: var(--text-secondary); margin-top: 4px;">
+          تتبع شحناتك، وراجع تفاصيل فواتيرك، واطلع على مسار شحن وتسليم كافة مشترياتك.
+        </p>
+      </div>
+
+      <!-- Orders Filter Tabs -->
+      <div class="orders-tabs" style="display: flex; gap: 8px; border-bottom: 1px solid var(--border); margin-bottom: 24px;">
+        <button class="tab-btn is-active" id="tab-all" style="padding: 10px 16px; border: none; background: transparent; font-weight: 700; border-bottom: 3px solid var(--accent-hover); cursor: pointer;">
+          كل الطلبات
+        </button>
+        <button class="tab-btn" id="tab-in-progress" style="padding: 10px 16px; border: none; background: transparent; color: var(--text-secondary); cursor: pointer;">
+          قيد التوصيل
+        </button>
+        <button class="tab-btn" id="tab-delivered" style="padding: 10px 16px; border: none; background: transparent; color: var(--text-secondary); cursor: pointer;">
+          الطلبات المسلمة
+        </button>
+      </div>
+
+      <!-- Orders List Container -->
+      <div id="orders" style="display: flex; flex-direction: column; gap: 20px;"></div>
+    </main>
+
+    <!-- Global Footer -->
+    <footer data-site-footer></footer>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script type="module" src="/js/pages/orders.page.js"></script>
+  </body>
+</html>

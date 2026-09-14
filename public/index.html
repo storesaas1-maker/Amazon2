@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>متجري (Matgari)</title>
+    <meta name="description" content="منصة تجارة إلكترونية متكاملة وشاملة لمختلف الأقسام والمنتجات" />
+    <meta property="og:title" content="متجري (Matgari)" />
+    <meta property="og:description" content="منصة تجارة إلكترونية متكاملة وشاملة لمختلف الأقسام والمنتجات" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <link rel="stylesheet" href="/css/styles.css" />
+    <style>
+      /* تنسيقات حاوية السلايدر الأفقي */
+      .shelf-carousel-container {
+        position: relative;
+        display: flex;
+        align-items: center;
+        margin: 10px 0 20px;
+      }
+      .shelf-carousel-track {
+        display: flex;
+        gap: 14px;
+        overflow-x: auto;
+        scroll-behavior: smooth;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+        padding: 8px 4px;
+        width: 100%;
+        -webkit-overflow-scrolling: touch;
+      }
+      .shelf-carousel-track::-webkit-scrollbar {
+        display: none;
+      }
+      .shelf-carousel-track .product-card {
+        flex: 0 0 250px;
+        min-width: 250px;
+        max-width: 250px;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
+      .shelf-carousel-track .product-card:hover {
+        transform: translateY(-4px);
+      }
+
+      /* أزرار التنقل (يمين وشمال) للكمبيوتر والموبايل */
+      .carousel-nav-btn {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.95);
+        border: 1px solid #cbd5e1;
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+        display: flex !important; /* لضمان الظهور على كل الأجهزة */
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        z-index: 20;
+        color: #1a202c;
+        font-size: 15px;
+        transition: all 0.2s ease;
+        touch-action: manipulation;
+      }
+      .carousel-nav-btn:hover,
+      .carousel-nav-btn:active {
+        background: #FF9900;
+        color: #ffffff;
+        border-color: #FF9900;
+        transform: translateY(-50%) scale(1.1);
+        box-shadow: 0 6px 18px rgba(255, 153, 0, 0.4);
+      }
+      .carousel-nav-btn.btn-prev {
+        right: -12px;
+      }
+      .carousel-nav-btn.btn-next {
+        left: -12px;
+      }
+
+      /* تحسينات خاصة بشاشات الهواتف والموبايل */
+      @media (max-width: 768px) {
+        .shelf-carousel-track {
+          gap: 10px;
+        }
+        .shelf-carousel-track .product-card {
+          flex: 0 0 215px;
+          min-width: 215px;
+          max-width: 215px;
+        }
+        .carousel-nav-btn {
+          width: 36px;
+          height: 36px;
+          font-size: 13px;
+          background: rgba(255, 255, 255, 0.92);
+          backdrop-filter: blur(4px);
+          box-shadow: 0 3px 12px rgba(0, 0, 0, 0.25);
+        }
+        .carousel-nav-btn.btn-prev {
+          right: 2px;
+        }
+        .carousel-nav-btn.btn-next {
+          left: 2px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- الهيدر -->
+    <header data-site-header></header>
+
+    <main class="marketplace-page" id="main-content">
+      <!-- 1. البانر الترويجي -->
+      <section class="home-banner-strip" aria-label="عرض المتجر الترويجي">
+        <div class="container">
+          <div class="banner-content-grid">
+            <div class="banner-text-box">
+              <h1 id="banner-headline">تسوق كل ما تحتاجه — أجهزة منزلية، إلكترونيات، أزياء ومستلزمات</h1>
+              <div class="banner-actions">
+                <a class="button btn-accent" href="/products.html" id="hero-browse-btn">
+                  <i class="fa-solid fa-boxes-stacked"></i> تصفح كل المنتجات
+                </a>
+                <a class="button btn-secondary" href="/help.html" id="hero-help-btn">
+                  <i class="fa-solid fa-headset"></i> مركز المساعدة
+                </a>
+              </div>
+            </div>
+
+            <div class="banner-badge-box">
+              <div class="badge-num">100%</div>
+              <div class="badge-sub">منتجات أصلية معتمدة</div>
+              <div style="font-size: 11px; color: #BBB; margin-top: 4px;">ضمان واستبدال مجاني</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="container">
+        <!-- 2. بطاقات الأقسام السريعة -->
+        <section class="category-bento-grid" id="category-bento" aria-label="أقسام التسوق السريعة">
+          <a class="bento-card" href="/products.html?section=sec_1">
+            <div>
+              <h3>أجهزة منزلية ومطبخ</h3>
+              <div class="bento-img-wrap">
+                <img src="https://images.unsplash.com/photo-1584568694244-14fbdf83bd30?w=500&auto=format&fit=crop&q=60" alt="أجهزة منزلية ومطبخ" loading="lazy" />
+              </div>
+            </div>
+            <span class="bento-link">تصفح القسم <i class="fa-solid fa-arrow-left"></i></span>
+          </a>
+
+          <a class="bento-card" href="/products.html?section=sec_2">
+            <div>
+              <h3>إلكترونيات وشاشات</h3>
+              <div class="bento-img-wrap">
+                <img src="https://images.unsplash.com/photo-1593359677879-a4bb92f829d1?w=500&auto=format&fit=crop&q=60" alt="إلكترونيات وأجهزة ذكية" loading="lazy" />
+              </div>
+            </div>
+            <span class="bento-link">تصفح الإلكترونيات <i class="fa-solid fa-arrow-left"></i></span>
+          </a>
+
+          <a class="bento-card" href="/products.html?section=sec_4">
+            <div>
+              <h3>أزياء وأحذية رياضية</h3>
+              <div class="bento-img-wrap">
+                <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500&auto=format&fit=crop&q=60" alt="أزياء وملابس وأحذية" loading="lazy" />
+              </div>
+            </div>
+            <span class="bento-link">تصفح الأزياء <i class="fa-solid fa-arrow-left"></i></span>
+          </a>
+
+          <a class="bento-card" href="/products.html?section=sec_5">
+            <div>
+              <h3>عطور وعناية شخصية</h3>
+              <div class="bento-img-wrap">
+                <img src="https://images.unsplash.com/photo-1523293182086-7651a899d37f?w=500&auto=format&fit=crop&q=60" alt="عطور وعناية شخصية" loading="lazy" />
+              </div>
+            </div>
+            <span class="bento-link">تصفح العطور <i class="fa-solid fa-arrow-left"></i></span>
+          </a>
+        </section>
+
+        <!-- 3. شريط الضمانات والمميزات -->
+        <section class="trust-bar" id="trust" aria-label="ضمانات متجري">
+          <div class="trust-item">
+            <i class="fa-solid fa-truck-fast"></i>
+            <div>
+              <strong>توصيل مجاني وسريع</strong>
+              <span>شحن سريع وآمن إلى باب منزلك في كافة المحافظات</span>
+            </div>
+          </div>
+          <div class="trust-item">
+            <i class="fa-solid fa-shield-halved"></i>
+            <div>
+              <strong>ضمان أصالة وجودة 100%</strong>
+              <span>منتجات أصلية معتمدة مع شهادات ضمان رسمية</span>
+            </div>
+          </div>
+          <div class="trust-item">
+            <i class="fa-solid fa-tags"></i>
+            <div>
+              <strong>أفضل الأسعار التنافسية</strong>
+              <span>تخفيضات يومية وقسائم شراء حصرية</span>
+            </div>
+          </div>
+          <div class="trust-item">
+            <i class="fa-solid fa-arrow-rotate-left"></i>
+            <div>
+              <strong>إرجاع سهل خلال 14 يوماً</strong>
+              <span>استرداد أو تبديل سلس بدون أي تعقيدات</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- 4. حاوية قسم المنتجات الأكثر تقييماً ومراجعة (بسلايدر مع أزرار التنقل) -->
+        <div id="top-rated-shelf-wrapper"></div>
+
+        <!-- 5. حاوية الأقسام المتعددة ديناميكياً (بحد أقصى 15 قسماً و 20 منتجاً للقسم) -->
+        <div id="sections-shelves-container"></div>
+      </div>
+    </main>
+
+    <!-- الفوتر -->
+    <footer data-site-footer></footer>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script type="module" src="/js/pages/index.page.js"></script>
+  </body>
+</html>

@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>إنشاء حساب جديد — متجري</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <link rel="stylesheet" href="/css/styles.css" />
+    <link rel="stylesheet" href="/css/auth.css" />
+  </head>
+  <body>
+    <div class="auth-shell">
+      <a class="auth-brand-header" href="/index.html" id="auth-logo">
+        <i class="fa-solid fa-bag-shopping" style="color: #FF9900;"></i>
+        <span data-store-name>متجري</span>
+        <span class="tld">.com</span>
+      </a>
+
+      <div class="auth-card" id="register-card" style="max-width: 440px;">
+        <h2>إنشاء حساب</h2>
+        <p class="auth-subtitle">بيانات سريعة لتفعيل حسابك ومتابعة مشترياتك</p>
+        <form id="register-form">
+          <div class="field">
+            <label for="reg-name">الاسم الكامل</label>
+            <input class="input" id="reg-name" name="name" required autocomplete="name" placeholder="مثال: أحمد محمد" />
+          </div>
+          <div class="field">
+            <label for="reg-email">البريد الإلكتروني</label>
+            <input class="input" id="reg-email" type="email" name="email" required autocomplete="email" placeholder="example@domain.com" />
+          </div>
+          <div class="field">
+            <label for="reg-password">كلمة المرور (8 أحرف على الأقل)</label>
+            <input class="input" id="reg-password" type="password" name="password" minlength="8" required autocomplete="new-password" placeholder="••••••••" />
+          </div>
+          <div class="field">
+            <label for="reg-phone">رقم الهاتف للتوصيل</label>
+            <input class="input" id="reg-phone" name="phone_number" required placeholder="+2010XXXXXXXX" />
+          </div>
+          <div class="field">
+            <label for="reg-whatsapp">رقم واتساب للتواصل السريع</label>
+            <input class="input" id="reg-whatsapp" name="whatsApp_number" required placeholder="+2010XXXXXXXX" />
+          </div>
+          <div class="field">
+            <label for="reg-gps">رابط الموقع الجغرافي / العنوان التفصيلي</label>
+            <input class="input" id="reg-gps" type="url" name="GPS_URL" required placeholder="https://maps.google.com/..." />
+          </div>
+          <button class="auth-submit" id="register-submit-btn" type="submit">إنشاء الحساب والمتابعة</button>
+        </form>
+        <p class="auth-disclaimer">
+          بإنشاء حساب، فإنك تقر وتوافق على <a href="#">شروط الاستخدام والبيع</a> و <a href="#">سياسة الخصوصية</a>.
+        </p>
+      </div>
+
+      <div class="auth-switch-divider" style="max-width: 440px;">
+        <span>لديك حساب بالفعل؟</span>
+      </div>
+
+      <a href="/login.html" class="auth-secondary-btn" id="login-account-link" style="max-width: 440px;">
+        تسجيل الدخول إلى حسابك
+      </a>
+
+      <div class="auth-footer">
+        <p>© متجري — منصة تجارة إلكترونية معتمدة</p>
+      </div>
+    </div>
+    <script type="module" src="/js/pages/register.page.js"></script>
+  </body>
+</html>
